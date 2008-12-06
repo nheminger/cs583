@@ -1,6 +1,9 @@
 package edu.gmu.cs583.kmeans_basic;
 
 import java.awt.Color;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -44,7 +47,20 @@ public class Kmeans {
 	}
 	
 	public static void main(String[] args) {
-		//TODO: run kmeans
+		Kmeans kmeans = new Kmeans(3,16, 100,100);  // test constructor using generated points
+		String str = " ";
+		while(!str.equals("r")){
+	    try {
+	        BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
+	        while (str != null) {
+	            System.out.print("> prompt ");
+	            str = in.readLine();
+	            System.out.println(str);
+	        }
+	    } catch (IOException e) {
+	    }
+
+		}
 	}
 	
 	public void createCentroids(){
@@ -70,31 +86,34 @@ public class Kmeans {
 	
 	public void calulateMembership(){
 		double minDistance = Double.MAX_VALUE;
+		Integer pointsChanged = 0;
 		Vector<Centroid> movedCentroids = new Vector<Centroid>();
 		for(Centroid j: centroids){
 			j.getCluster().setHasNewMember(false);               // ini hasNewMember bool
 			j.getCluster().setPoints(new Vector<DataPoint>());   // clear clusters for each centroid
-			if(j.isHasMoved()){
-				movedCentroids.add(j);                           // these are the only centroid that need to recompute distance to points
-			}
+//			if(j.isHasMoved()){
+//				movedCentroids.add(j);                           // these are the only centroid that need to recompute distance to points
+//			}
 		}
 		//TODO: does a centroid need to be recalulated if it does not move?		
 		for(DataPoint i: dataPoints){
 			Centroid tempcent = new Centroid();
-			for(Centroid j: movedCentroids){
+			for(Centroid j: centroids){
 				if (minDistance > distance.getDistance(j,i)){
 					tempcent = j;
 				}
 			}
 			
-			i.setMembershipId(tempcent.getCentroidId());
+			if(i.setMembershipId(tempcent.getCentroidId()));
+				pointsChanged++;
 			i.setCentroidMembership(tempcent.getCentroidColor());
 			tempcent.getCluster().getPoints().add(i);
-			tempcent.getCluster().setHasNewMember(true);
 			minDistance = Double.MAX_VALUE;
 			
 		}
-
+		System.out.println(" ");
+		System.out.println("number of points changed ownership " + pointsChanged);
+		System.out.println(" ");
 	}
 	
 	public void recomputeCentroids(){
@@ -112,6 +131,13 @@ public class Kmeans {
 					
 				}
 				j.setPoints(x_mean/temp.size(), y_mean/temp.size());
+				if(DEBUG){
+				System.out.println("------ centroid " + j.getCentroidId() + " ------");	
+					for(DataPoint i: j.getCluster().getPoints()){
+						System.out.println(i);
+					}
+				System.out.println(" ");
+				}
 			}
 		//TODO: move centroid to middle of its cluster
 	}
