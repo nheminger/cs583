@@ -1,6 +1,7 @@
 package edu.gmu.cs583.data;
 
 import java.util.Vector;
+import edu.gmu.cs583.util.Geometry;
 
 /**
  * The Dendogram class is used to represent how the hierarchical clustering
@@ -13,7 +14,8 @@ public class Dendogram {
 
 	private Vector<Dendogram> subDendograms;
 	private Cluster cluster;
-
+	private Cluster centroid;
+	
 	/**
 	 * Default Constructor
 	 */
@@ -21,7 +23,14 @@ public class Dendogram {
 		subDendograms = new Vector<Dendogram>();
 		cluster = new Cluster();
 	}
-
+	
+	/**
+	 * @return the subDendograms
+	 */
+	public Vector<Dendogram> getSubDendograms() {
+		return subDendograms;
+	}
+	
 	/**
 	 * Initialization Method for hierarchical method, sets each data point into
 	 * its own cluster.
@@ -111,12 +120,16 @@ public class Dendogram {
 		String str = "{";
 
 		if (subDendograms.isEmpty()) {
-			for (DataPoint point : cluster.getPoints()) {
-				str += "(" + point.getX() + ", " + point.getY() + "),";
+			for (int i = 0; i <= cluster.getPoints().size() - 1; i++) {
+				str += "(" + cluster.getPoints().get(i).getX() + ", "
+						+ cluster.getPoints().get(i).getY() + ")";
 			}
 		} else {
-			for (Dendogram dendogram : subDendograms) {
-				System.out.print(dendogram);
+			for (int i = 0; i <= subDendograms.size() - 1; i++) {
+				if (i == subDendograms.size() - 1)
+					str += subDendograms.get(i);
+				else
+					str += subDendograms.get(i) + ", ";
 			}
 		}
 
