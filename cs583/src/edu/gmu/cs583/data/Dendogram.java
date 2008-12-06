@@ -23,6 +23,27 @@ public class Dendogram {
 	}
 
 	/**
+	 * Initialization Method for hierarchical method, sets each data point into
+	 * its own cluster.
+	 * 
+	 * @param dataPoints
+	 *            Data Points to cluster.
+	 * @throws Exception
+	 */
+	public Dendogram(Vector<DataPoint> dataPoints) throws Exception {
+		subDendograms = new Vector<Dendogram>();
+		for (DataPoint point : dataPoints) {
+			Vector<DataPoint> points = new Vector<DataPoint>();
+			points.add(point);
+			Cluster cluster = new Cluster();
+			cluster.setCluster(points);
+			Dendogram dendogram = new Dendogram();
+			dendogram.setCluster(cluster);
+			subDendograms.addElement(dendogram);
+		}
+	}
+
+	/**
 	 * Adds a sub-dendogram to the dendogram
 	 * 
 	 * @param subDendogram
