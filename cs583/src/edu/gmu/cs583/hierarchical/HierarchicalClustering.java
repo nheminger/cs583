@@ -1,7 +1,9 @@
 package edu.gmu.cs583.hierarchical;
 
+import java.util.Collections;
 import java.util.Vector;
 import edu.gmu.cs583.data.*;
+import edu.gmu.cs583.data.PointGenerator;
 
 /**
  * Calculates a clustering of DataPoints using the hierarchical agglomerative
@@ -16,6 +18,15 @@ public class HierarchicalClustering {
 		SINGLE_LINK, COMPLETE_LINK
 	};
 
+	public static void main(String[] args) throws Exception {
+		
+		HierarchicalClustering clustering = new HierarchicalClustering(LINK_TYPE.COMPLETE_LINK);
+		PointGenerator generator = new PointGenerator(10);
+		generator.GeneratePoints();
+		Vector<DataPoint> points = generator.GetPointsVector();
+		clustering.calculateClusters(points);
+	}
+	
 	private HierarchicalSimilarityMatrix similarityMatrix;
 	private LINK_TYPE linkageType;
 
@@ -43,10 +54,6 @@ public class HierarchicalClustering {
 	public Dendogram calculateClusters(Vector<DataPoint> data) throws Exception {
 		Dendogram result = null;
 
-		// calculate point to point similarities
-		similarityMatrix = new HierarchicalSimilarityMatrix(data);
-		similarityMatrix.calculateSimilarity();
-
 		// compute cluster membership using single link or complete link method
 		if (linkageType.equals(LINK_TYPE.SINGLE_LINK))
 			result = calculateSingleLinkClusters(data);
@@ -58,15 +65,15 @@ public class HierarchicalClustering {
 
 	private Dendogram calculateSingleLinkClusters(Vector<DataPoint> data)
 			throws Exception {
-		Dendogram result = new Dendogram(data);
-		// TODO: Compute cluster membership using single-link method.
+		Dendogram result = new Dendogram();
+		
 		return result;
 	}
 
 	private Dendogram calculateCompleteLinkClusters(Vector<DataPoint> data)
 			throws Exception {
-		Dendogram result = new Dendogram(data);
-		// TODO: Computer cluster membership using complete-link method.
+		Dendogram result = new Dendogram();
+
 		return result;
 	}
 }
