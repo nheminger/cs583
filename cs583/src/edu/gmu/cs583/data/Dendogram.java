@@ -114,9 +114,9 @@ public class Dendogram {
 		else {
 			for (int i = 0; i <= subDendograms.size() - 1; i++) {
 				if (i == subDendograms.size() - 1)
-					str += subDendograms.toString();
+					str += "\n" + subDendograms.toString();
 				else
-					str += subDendograms.toString() + ", ";
+					str += "\n" + subDendograms.toString() + ", ";
 			}
 		}
 
