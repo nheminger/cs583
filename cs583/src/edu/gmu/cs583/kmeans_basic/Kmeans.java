@@ -86,6 +86,11 @@ public class Kmeans {
 	public void recomputeCentroids(){
 		
 			for(Centroid j: centroids){
+				Vector<DataPoint> temp = new Vector<DataPoint>();
+				temp = j.getCluster().getCluster();
+				for(int i = 0; i < temp.size(); i++){
+					
+				}
 				
 			}
 
