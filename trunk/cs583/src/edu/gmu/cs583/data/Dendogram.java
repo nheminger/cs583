@@ -33,6 +33,16 @@ public class Dendogram {
 	}
 
 	/**
+	 * Adds a subdendogram to the dendogram.
+	 * 
+	 * @param subDendogram
+	 *            subdendogram to add to the dendogram.
+	 */
+	public void addSubDendogram(Dendogram subDendogram) {
+		subDendograms.addElement(subDendogram);
+	}
+
+	/**
 	 * Recalculate the centroid of the Cluster based on its sub-clusters
 	 * 
 	 * @return the centroid representing the center of the dendogram.

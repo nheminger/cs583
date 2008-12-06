@@ -19,14 +19,15 @@ public class HierarchicalClustering {
 	};
 
 	public static void main(String[] args) throws Exception {
-		
-		HierarchicalClustering clustering = new HierarchicalClustering(LINK_TYPE.COMPLETE_LINK);
+
+		HierarchicalClustering clustering = new HierarchicalClustering(
+				LINK_TYPE.COMPLETE_LINK);
 		PointGenerator generator = new PointGenerator(10);
 		generator.GeneratePoints();
 		Vector<DataPoint> points = generator.GetPointsVector();
 		clustering.calculateClusters(points);
 	}
-	
+
 	private HierarchicalSimilarityMatrix similarityMatrix;
 	private LINK_TYPE linkageType;
 
@@ -66,13 +67,75 @@ public class HierarchicalClustering {
 	private Dendogram calculateSingleLinkClusters(Vector<DataPoint> data)
 			throws Exception {
 		Dendogram result = new Dendogram();
-		
+		Vector<Dendogram> clusters = new Vector<Dendogram>();
+
+		// Put each data point into its own cluster
+		for (DataPoint point : data) {
+			Dendogram dendogram = new Dendogram(point);
+			clusters.addElement(dendogram);
+		}
+
+		while (clusters.size() > 1) {
+
+			// calculate similarity between clusters
+			similarityMatrix = new HierarchicalSimilarityMatrix(clusters);
+			similarityMatrix.calculateSimilarity();
+
+			// sort them by minimum distance
+			Collections.sort(similarityMatrix.getSimilarityList(),
+					new SingleLinkComparator());
+			
+			// get two clusters which are similar
+			Dendogram cluster_J = similarityMatrix.getSimilarityList().get(0).getPoint_J();
+			Dendogram cluster_K = similarityMatrix.getSimilarityList().get(0).getPoint_K();
+			
+			// merge them into one cluster
+			Dendogram dendogram = new Dendogram();
+			dendogram.addSubDendogram(cluster_J);
+			dendogram.addSubDendogram(cluster_K);
+			dendogram.recalculateCentroid();
+			similarityMatrix.getSimilarityList().remove(0);
+			clusters.remove(cluster_J);
+			clusters.remove(cluster_K);
+		}
+
 		return result;
 	}
 
 	private Dendogram calculateCompleteLinkClusters(Vector<DataPoint> data)
 			throws Exception {
 		Dendogram result = new Dendogram();
+		Vector<Dendogram> clusters = new Vector<Dendogram>();
+
+		// Put each data point into its own cluster
+		for (DataPoint point : data) {
+			Dendogram dendogram = new Dendogram(point);
+			clusters.addElement(dendogram);
+		}
+
+		while (clusters.size() > 1) {
+
+			// calculate similarity between clusters
+			similarityMatrix = new HierarchicalSimilarityMatrix(clusters);
+			similarityMatrix.calculateSimilarity();
+
+			// sort them by minimum distance
+			Collections.sort(similarityMatrix.getSimilarityList(),
+					new CompleteLinkComparator());
+			
+			// get two clusters which are similar
+			Dendogram cluster_J = similarityMatrix.getSimilarityList().get(0).getPoint_J();
+			Dendogram cluster_K = similarityMatrix.getSimilarityList().get(0).getPoint_K();
+			
+			// merge them into one cluster
+			Dendogram dendogram = new Dendogram();
+			dendogram.addSubDendogram(cluster_J);
+			dendogram.addSubDendogram(cluster_K);
+			dendogram.recalculateCentroid();
+			similarityMatrix.getSimilarityList().remove(0);
+			clusters.remove(cluster_J);
+			clusters.remove(cluster_K);
+		}
 
 		return result;
 	}
