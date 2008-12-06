@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.Random;
 import java.util.Vector;
 
+import javax.xml.crypto.Data;
+
 import edu.gmu.cs583.data.Centroid;
 import edu.gmu.cs583.data.DataPoint;
 import edu.gmu.cs583.data.PointGenerator;
@@ -67,23 +69,32 @@ public class Kmeans {
 	}
 	
 	public void calulateMembership(){
-		double temp, minDistance = Double.MAX_VALUE;
+		double minDistance = Double.MAX_VALUE;
+		Vector<Centroid> movedCentroids = new Vector<Centroid>();
+		for(Centroid j: centroids){
+			j.getCluster().setHasNewMember(false);               // ini hasNewMember bool
+			j.getCluster().setPoints(new Vector<DataPoint>());   // clear clusters for each centroid
+			if(j.isHasMoved()){
+				movedCentroids.add(j);                           // these are the only centroid that need to recompute distance to points
+			}
+		}
 		//TODO: does a centroid need to be recalulated if it does not move?		
 		for(DataPoint i: dataPoints){
 			Centroid tempcent = new Centroid();
-			for(Centroid j: centroids){
-				j.getCluster();
+			for(Centroid j: movedCentroids){
 				if (minDistance > distance.getDistance(j,i)){
-					i.setMembershipId(j.getCentroidId());
-					i.setCentroidMembership(j.getCentroidColor());
 					tempcent = j;
 				}
 			}
+			
+			i.setMembershipId(tempcent.getCentroidId());
+			i.setCentroidMembership(tempcent.getCentroidColor());
 			tempcent.getCluster().getPoints().add(i);
+			tempcent.getCluster().setHasNewMember(true);
 			minDistance = Double.MAX_VALUE;
-		
+			
 		}
-		//TODO: check if any of the centroids don't have new members if they don't then stop you done
+
 	}
 	
 	public void recomputeCentroids(){
