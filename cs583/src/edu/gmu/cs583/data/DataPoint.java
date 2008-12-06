@@ -81,4 +81,16 @@ public class DataPoint implements Comparable<DataPoint>{
 		return result;
 	}
 	
+	public boolean equals(Object o){
+		boolean isEqual = false;
+		try{
+		if(this.compareTo((DataPoint)o) == 1){
+			isEqual = true;
+		}
+		}catch (Exception e){
+			isEqual = false;
+		}
+		return isEqual;
+	}
+	
 }
