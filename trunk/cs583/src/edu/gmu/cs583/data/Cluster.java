@@ -5,7 +5,7 @@ import java.util.Vector;
 public class Cluster {
 	private Integer clusterId;
 	private boolean hasNewMember;
-	private Vector<DataPoint> cluster = new Vector<DataPoint>();
+	private Vector<DataPoint> points = new Vector<DataPoint>();
 	
 	Cluster(){
 		
@@ -27,12 +27,14 @@ public class Cluster {
 		this.hasNewMember = hasNewMember;
 	}
 
-	public Vector<DataPoint> getCluster() {
-		return cluster;
+	public Vector<DataPoint> getPoints() {
+		return points;
 	}
 
-	public void setCluster(Vector<DataPoint> cluster) {
-		this.cluster = cluster;
+	public void setPoints(Vector<DataPoint> points) {
+		this.points = points;
 	}
+
+
 	
 }
