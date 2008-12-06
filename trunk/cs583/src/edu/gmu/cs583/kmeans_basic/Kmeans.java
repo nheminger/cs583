@@ -25,11 +25,11 @@ public class Kmeans {
 	private List<Color> colors = new ArrayList<Color>();
 	private Integer number_of_centroids;
 	private Integer number_of_points;
-	private Geometry distance;
+	private Geometry distance = new Geometry();
 	
 	Kmeans(Integer numberOfCentroids,Integer numberOfDataPoints,Integer x,Integer y){
 		number_of_points = numberOfDataPoints;
-		if(numberOfCentroids < 12){
+		if(numberOfCentroids > 12){
 			System.out.println("Max number of centroids is 12, The number of centroids has been set to 12");
 			number_of_centroids = 12;
 		} else if (numberOfCentroids > 0){
@@ -43,13 +43,14 @@ public class Kmeans {
 		makecolors();
 		PointGenerator gen = new PointGenerator(numberOfDataPoints);
 		gen.GeneratePoints();
+		setDataPoints(gen.GetPointsVector());
 		createCentroids();
 	}
 	
 	public static void main(String[] args) {
 		Kmeans kmeans = new Kmeans(3,16, 100,100);  // test constructor using generated points
 		String str = " ";
-		while(!str.equals("r")){
+		while(!str.equals("r\n")){
 	    try {
 	        BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
 	        while (str != null) {
