@@ -50,6 +50,7 @@ public class Kmeans {
 	public void createCentroids(){
 		for(int i = 0; i < number_of_centroids;i++){
 			Centroid cent = new Centroid();
+			cent.setCentroidId(i+1);
 			centroids.add(cent);
 		}
 		initCentroids();
@@ -59,7 +60,6 @@ public class Kmeans {
 		int t = 0;
 		for(Centroid i: centroids){
 			i.setPoints(dataPoints.get(t).getX(),dataPoints.get(t).getY());
-			i.setCentroidId((t+1));
 			i.setCentroidColor(colors.get(t));
 			t++;
 			if(DEBUG){
