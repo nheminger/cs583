@@ -9,6 +9,7 @@ public class Centroid {
 	private Double y;
 	private Color centroidColor;
 	private Cluster cluster;
+	private boolean hasMoved;
 	
 	public Centroid(){
 
@@ -76,6 +77,14 @@ public class Centroid {
 		this.y = y;
 	}
 	
+	public boolean isHasMoved() {
+		return hasMoved;
+	}
+
+	public void setHasMoved(boolean hasMoved) {
+		this.hasMoved = hasMoved;
+	}
+
 	public String toString(){
 		return x.toString() + ":" + y.toString();
 	}	
