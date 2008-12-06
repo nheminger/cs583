@@ -14,16 +14,24 @@ import java.util.Vector;
 
 public class PointGenerator {
 
-	Integer x_range;
-	Integer y_range;
-	Integer number_of_points;
-	Vector<DataPoint> returnDataPoints = new Vector<DataPoint>();
-	HashMap<String,DataPoint> hashedPoints = new HashMap<String,DataPoint>();
+	private Integer x_range;
+	private Integer y_range;
+	private Integer number_of_points;
+	private Vector<DataPoint> returnDataPoints = new Vector<DataPoint>();
+	private HashMap<String,DataPoint> hashedPoints = new HashMap<String,DataPoint>();
+	private boolean DEBUG = false;
 	
 	public PointGenerator(){
 		x_range = 301;
 		y_range = 301;
 		number_of_points = 50;
+		GeneratePoints();
+	}
+	
+	public PointGenerator(Integer numberOfPoints){
+		x_range = 301;
+		y_range = 301;
+		number_of_points = numberOfPoints;
 		GeneratePoints();
 	}
 	
@@ -33,6 +41,14 @@ public class PointGenerator {
 		y_range = y+1;
 		number_of_points = numberOfPoints;
 		GeneratePoints();
+	}
+	
+	PointGenerator(Integer x, Integer y, Integer numberOfPoints, boolean debug){
+		x_range = x+1;
+		y_range = y+1;
+		number_of_points = numberOfPoints;
+		GeneratePoints();
+		this.DEBUG = debug;
 	}
 	
 	public DataPoint GeneratePoints(){
@@ -63,5 +79,28 @@ public class PointGenerator {
 		}
 	}
 	
+	public void newPoints(Integer x, Integer y,Integer n){
+		x_range = x+1;
+		y_range = y+1;
+		if(n > 0)
+		number_of_points = n;
+		GeneratePoints();
+	}
+
+	public Integer getX_range() {
+		return x_range;
+	}
+
+	public void setX_range(Integer x_range) {
+		this.x_range = x_range;
+	}
+
+	public Integer getY_range() {
+		return y_range;
+	}
+
+	public void setY_range(Integer y_range) {
+		this.y_range = y_range;
+	}
 	
 }
