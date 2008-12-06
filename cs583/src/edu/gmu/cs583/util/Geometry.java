@@ -4,7 +4,7 @@ import edu.gmu.cs583.data.Centroid;
 import edu.gmu.cs583.data.DataPoint;
 
 public class Geometry {
-	private boolean DEBUG = false;
+	private static boolean DEBUG = false;
 
 	public Geometry() {
 	}
@@ -17,7 +17,7 @@ public class Geometry {
 		System.out.println(geo.getDistance(cent, point));
 	}
 
-	public Double getDistance(Centroid centroid, DataPoint point) {
+	public static Double getDistance(Centroid centroid, DataPoint point) {
 		Double xVals = Math.pow((centroid.getX() - point.getX()), 2);
 		Double yVals = Math.pow((centroid.getY() - point.getY()), 2);
 		if (DEBUG)
@@ -27,14 +27,14 @@ public class Geometry {
 
 		return Math.sqrt(xVals + yVals);
 	}
-
+	
 	/**
 	 * Returns the Euclidean distance of two data points.
 	 * @param x Data Point X
 	 * @param y Data Point Y
 	 * @return Euclidean distance between two dimension points.
 	 */
-	public double getEuclideanDistance(DataPoint x, DataPoint y) {
+	public static double getEuclideanDistance(DataPoint x, DataPoint y) {
 		double xVal = Math.pow((x.getX() - y.getX()), 2);
 		double yVal = Math.pow((x.getY() - y.getY()), 2);
 
