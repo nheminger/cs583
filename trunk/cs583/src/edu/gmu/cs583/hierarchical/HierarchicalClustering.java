@@ -97,6 +97,7 @@ public class HierarchicalClustering {
 			similarityMatrix.getSimilarityList().remove(0);
 			clusters.remove(cluster_J);
 			clusters.remove(cluster_K);
+			clusters.addElement(dendogram);
 		}
 
 		return result;
@@ -135,6 +136,7 @@ public class HierarchicalClustering {
 			similarityMatrix.getSimilarityList().remove(0);
 			clusters.remove(cluster_J);
 			clusters.remove(cluster_K);
+			clusters.addElement(dendogram);
 		}
 
 		return result;
