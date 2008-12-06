@@ -60,6 +60,8 @@ public class DataPoint implements Comparable<DataPoint>{
 	}
 
 	public void setMembershipId(Integer membershipId) {
+		if(MembershipId != membershipId)
+				setOwnerChanged(true);
 		MembershipId = membershipId;
 	}
 
