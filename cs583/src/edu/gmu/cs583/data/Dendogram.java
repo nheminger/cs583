@@ -111,7 +111,13 @@ public class Dendogram {
 		String str = "{";
 
 		if (subDendograms.isEmpty()) {
-
+			for (DataPoint point : cluster.getPoints()) {
+				str += "(" + point.getX() + ", " + point.getY() + "),";
+			}
+		} else {
+			for (Dendogram dendogram : subDendograms) {
+				System.out.print(dendogram);
+			}
 		}
 
 		str += "}";
