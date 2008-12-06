@@ -70,15 +70,18 @@ public class Kmeans {
 		double temp, minDistance = Double.MAX_VALUE;
 		//TODO: does a centroid need to be recalulated if it does not move?		
 		for(DataPoint i: dataPoints){
+			Centroid tempcent = new Centroid();
 			for(Centroid j: centroids){
 				j.getCluster();
 				if (minDistance > distance.getDistance(j,i)){
 					i.setMembershipId(j.getCentroidId());
 					i.setCentroidMembership(j.getCentroidColor());
-					//TODO: add to cluster
+					tempcent = j;
 				}
 			}
+			tempcent.getCluster().getPoints().add(i);
 			minDistance = Double.MAX_VALUE;
+		
 		}
 		//TODO: check if any of the centroids don't have new members if they don't then stop you done
 	}
@@ -86,14 +89,19 @@ public class Kmeans {
 	public void recomputeCentroids(){
 		
 			for(Centroid j: centroids){
+				Double x_mean = 0.0, y_mean = 0.0;
 				Vector<DataPoint> temp = new Vector<DataPoint>();
-				temp = j.getCluster().getCluster();
+				temp = j.getCluster().getPoints();
+				
 				for(int i = 0; i < temp.size(); i++){
+					DataPoint pt = new DataPoint();
+					pt = temp.get(i);
+					x_mean =+ pt.getX();
+					y_mean =+ pt.getY();
 					
 				}
-				
+				j.setPoints(x_mean/temp.size(), y_mean/temp.size());
 			}
-
 		//TODO: move centroid to middle of its cluster
 	}
 	
