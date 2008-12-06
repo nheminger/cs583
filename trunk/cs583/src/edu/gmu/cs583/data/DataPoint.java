@@ -10,19 +10,23 @@ package edu.gmu.cs583.data;
 import java.awt.Color;
 
 
-public class DataPoint {
-	Integer x;
-	Integer y;
+public class DataPoint implements Comparable<DataPoint>{
+	private Integer x;
+	private Integer y;
+	private Integer MembershipId;
+	private Color centroidMembership = null;
 	
 	public DataPoint(){
 		Integer x = -1;
 		Integer y = -1;
+		centroidMembership = Color.white;
 	}
 	
 	public DataPoint(Integer x, Integer y) {
 		super();
 		this.x = x;
 		this.y = y;
+		centroidMembership = Color.white;
 	}
 
 	public Integer getX() {
@@ -48,6 +52,33 @@ public class DataPoint {
 	public void setPoints(Integer x, Integer y){
 		this.x = x;
 		this.y = y;
+	}
+
+	public Integer getMembershipId() {
+		return MembershipId;
+	}
+
+	public void setMembershipId(Integer membershipId) {
+		MembershipId = membershipId;
+	}
+
+	public Color getCentroidMembership() {
+		return centroidMembership;
+	}
+
+	public void setCentroidMembership(Color centroidMembership) {
+		this.centroidMembership = centroidMembership;
+	}
+
+	@Override
+	public int compareTo(DataPoint o) {
+		int result = 0;
+		if(this.getX() == o.getX()){
+			if(this.getY() == o.getY()){
+				result = 1;
+			}
+		}
+		return result;
 	}
 	
 }
