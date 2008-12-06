@@ -36,7 +36,7 @@ public class Dendogram {
 			Vector<DataPoint> points = new Vector<DataPoint>();
 			points.add(point);
 			Cluster cluster = new Cluster();
-			cluster.setCluster(points);
+			cluster.setPoints(points);
 			Dendogram dendogram = new Dendogram();
 			dendogram.setCluster(cluster);
 			subDendograms.addElement(dendogram);
@@ -87,7 +87,7 @@ public class Dendogram {
 	 *            the cluster to set.
 	 */
 	public void setCluster(Cluster cluster) throws Exception {
-		if (cluster.getCluster().size() < 2) {
+		if (cluster.getPoints().size() < 2) {
 			subDendograms = new Vector<Dendogram>();
 			this.cluster = cluster;
 		} else
