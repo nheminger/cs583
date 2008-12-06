@@ -12,16 +12,16 @@ import edu.gmu.cs583.util.*;
 public class HierarchicalSimilarityMatrix {
 
 	private Vector<Similarity> similarityList;
-	private Vector<DataPoint> points;
+	private Vector<Dendogram> clusters;
 
 	/**
-	 * Constructs a Hierarchical_Similarity Object
+	 * Generate a similarity matrix from the given dendograms
 	 * 
-	 * @param points
-	 *            List of data points to construct a similarity matrix from.
+	 * @param clusters
+	 *            a set of dendograms.
 	 */
-	public HierarchicalSimilarityMatrix(Vector<DataPoint> points) {
-		this.points = points;
+	public HierarchicalSimilarityMatrix(Vector<Dendogram> clusters) {
+		this.clusters = clusters;
 		similarityList = new Vector<Similarity>();
 	}
 
@@ -33,10 +33,26 @@ public class HierarchicalSimilarityMatrix {
 	}
 
 	/**
-	 * @return the points
+	 * @param similarityList
+	 *            the similarityList to set
 	 */
-	public Vector<DataPoint> getPoints() {
-		return points;
+	public void setSimilarityList(Vector<Similarity> similarityList) {
+		this.similarityList = similarityList;
+	}
+
+	/**
+	 * @return the clusters
+	 */
+	public Vector<Dendogram> getClusters() {
+		return clusters;
+	}
+
+	/**
+	 * @param clusters
+	 *            the clusters to set
+	 */
+	public void setClusters(Vector<Dendogram> clusters) {
+		this.clusters = clusters;
 	}
 
 	/**
@@ -46,21 +62,16 @@ public class HierarchicalSimilarityMatrix {
 	 *            Type Hierarchical LINK type.
 	 */
 	public void calculateSimilarity() {
-		Geometry mathUtil = new Geometry();
-		for (int i = 0; i <= points.size() - 1; i++) {
-			for (int j = 0; j <= points.size() - 1; j++) {
-				if (i != j) { // don't calculate distances for itself
-					DataPoint x = points.get(i);
-					DataPoint y = points.get(j);
-
-					// add similarity measures to the list
-					Similarity similarity = new Similarity();
-					similarity.setPoint_J(x);
-					similarity.setPoint_K(y);
-					similarity.setSimilarity(mathUtil
-							.getEuclideanDistance(x, y));
-					similarityList.addElement(similarity);
-				}
+		for (int i = 0; i <= clusters.size() - 1; i++) {
+			for (int j = 0; i <= clusters.size() - 1; j++) {
+				// calculate similarities
+				Dendogram cluster_J = new Dendogram();
+				Dendogram cluster_K = new Dendogram();
+				Similarity similarity = new Similarity();
+				similarity.setPoint_J(cluster_J);
+				similarity.setPoint_K(cluster_K);
+				similarity.setSimilarity(Geometry.getEuclideanDistance(
+						cluster_J.getCentroid(), cluster_K.getCentroid()));
 			}
 		}
 	}

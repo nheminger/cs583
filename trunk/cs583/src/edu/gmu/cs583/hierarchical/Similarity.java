@@ -11,14 +11,14 @@ import edu.gmu.cs583.data.*;
  */
 public class Similarity implements Comparable<Similarity> {
 
-	private DataPoint point_J;
-	private DataPoint point_K;
+	private Dendogram point_J;
+	private Dendogram point_K;
 	private Double similarity;
 
 	/**
 	 * @return the point_J
 	 */
-	public DataPoint getPoint_J() {
+	public Dendogram getPoint_J() {
 		return point_J;
 	}
 
@@ -26,14 +26,14 @@ public class Similarity implements Comparable<Similarity> {
 	 * @param point_J
 	 *            the point_J to set
 	 */
-	public void setPoint_J(DataPoint point_J) {
+	public void setPoint_J(Dendogram point_J) {
 		this.point_J = point_J;
 	}
 
 	/**
 	 * @return the point_K
 	 */
-	public DataPoint getPoint_K() {
+	public Dendogram getPoint_K() {
 		return point_K;
 	}
 
@@ -41,7 +41,7 @@ public class Similarity implements Comparable<Similarity> {
 	 * @param point_K
 	 *            the point_K to set
 	 */
-	public void setPoint_K(DataPoint point_K) {
+	public void setPoint_K(Dendogram point_K) {
 		this.point_K = point_K;
 	}
 
