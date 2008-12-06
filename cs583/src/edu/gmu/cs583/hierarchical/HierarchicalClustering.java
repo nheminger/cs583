@@ -38,14 +38,15 @@ public class HierarchicalClustering {
 	 *            a set of data points.
 	 * @return a dendogram representing the hierarchy of clustering for a given
 	 *         set of points.
+	 * @exception
 	 */
-	public Dendogram calculateClusters(Vector<DataPoint> data) {
+	public Dendogram calculateClusters(Vector<DataPoint> data) throws Exception {
 		Dendogram result = null;
-		
+
 		// calculate point to point similarities
 		similarityMatrix = new HierarchicalSimilarityMatrix(data);
 		similarityMatrix.calculateSimilarity();
-		
+
 		// compute cluster membership using single link or complete link method
 		if (linkageType.equals(LINK_TYPE.SINGLE_LINK))
 			result = calculateSingleLinkClusters(data);
@@ -55,15 +56,17 @@ public class HierarchicalClustering {
 		return result;
 	}
 
-	private Dendogram calculateSingleLinkClusters(Vector<DataPoint> data) {
-		Dendogram result = new Dendogram();
-		//TODO: Compute cluster membership using single-link method.
+	private Dendogram calculateSingleLinkClusters(Vector<DataPoint> data)
+			throws Exception {
+		Dendogram result = new Dendogram(data);
+		// TODO: Compute cluster membership using single-link method.
 		return result;
 	}
 
-	private Dendogram calculateCompleteLinkClusters(Vector<DataPoint> data) {
-		Dendogram result = new Dendogram();
-		//TODO: Computer cluster membership using complete-link method.
+	private Dendogram calculateCompleteLinkClusters(Vector<DataPoint> data)
+			throws Exception {
+		Dendogram result = new Dendogram(data);
+		// TODO: Computer cluster membership using complete-link method.
 		return result;
 	}
 }
