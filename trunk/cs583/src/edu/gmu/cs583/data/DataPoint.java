@@ -15,7 +15,7 @@ public class DataPoint implements Comparable<DataPoint>{
 	private Double y;
 	private Integer MembershipId;
 	private Color centroidMembership = null;
-	private boolean ownerChanged;
+	private boolean ownerChanged = false;
 	
 	public DataPoint(){
 		Double x = -1.0;
@@ -59,10 +59,11 @@ public class DataPoint implements Comparable<DataPoint>{
 		return MembershipId;
 	}
 
-	public void setMembershipId(Integer membershipId) {
+	public boolean setMembershipId(Integer membershipId) {
 		if(MembershipId != membershipId)
 				setOwnerChanged(true);
 		MembershipId = membershipId;
+		return isOwnerChanged();
 	}
 
 	public Color getCentroidMembership() {
@@ -74,7 +75,9 @@ public class DataPoint implements Comparable<DataPoint>{
 	}
 
 	public boolean isOwnerChanged() {
-		return ownerChanged;
+		boolean temp = ownerChanged;
+		ownerChanged = false;
+		return temp;
 	}
 
 	public void setOwnerChanged(boolean ownerChanged) {
