@@ -14,8 +14,8 @@ public class Dendogram {
 
 	private Vector<Dendogram> subDendograms;
 	private Cluster cluster;
-	private Cluster centroid;
-	
+	private DataPoint centroid;
+
 	/**
 	 * Default Constructor
 	 */
@@ -25,12 +25,48 @@ public class Dendogram {
 	}
 	
 	/**
+	 * @return the centroid
+	 */
+	public DataPoint getCentroid() {
+		return centroid;
+	}
+	/**
+	 * @param centroid the centroid to set
+	 */
+	public void setCentroid(DataPoint centroid) {
+		this.centroid = centroid;
+	}
+
+	/**
+	 * Calculate centroid of the dendogram.
+	 */
+	public void calculateCentroid() {
+		if (!subDendograms.isEmpty()) {
+			centroid = new DataPoint();
+			int i = 0;
+			for (Dendogram dendogram : subDendograms) {
+				dendogram.calculateCentroid();
+				centroid.setX(centroid.getX() + dendogram.getCentroid().getX());
+				centroid.setY(centroid.getY() + dendogram.getCentroid().getY());
+				i++;
+			}
+			centroid.setX(centroid.getX() / i);
+			centroid.setY(centroid.getY() / i);
+		}
+		else {
+			DataPoint x = cluster.getPoints().get(0);
+			DataPoint y = cluster.getPoints().get(1);
+			centroid = Geometry.average(x, y);
+		}
+	}
+
+	/**
 	 * @return the subDendograms
 	 */
 	public Vector<Dendogram> getSubDendograms() {
 		return subDendograms;
 	}
-	
+
 	/**
 	 * Initialization Method for hierarchical method, sets each data point into
 	 * its own cluster.
