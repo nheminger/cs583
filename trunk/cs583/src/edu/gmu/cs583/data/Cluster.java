@@ -1,4 +1,4 @@
-package edu.gmu.cs583.project.data;
+package edu.gmu.cs583.data;
 
 import java.util.Vector;
 

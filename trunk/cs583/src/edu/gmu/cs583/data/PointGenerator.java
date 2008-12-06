@@ -6,7 +6,7 @@
  * range. It outputs a Vector of n DataPoint Class initialized with x and y position in the given range.
  */
 
-package edu.gmu.cs583.project.data;
+package edu.gmu.cs583.data;
 
 import java.util.HashMap;
 import java.util.Random;

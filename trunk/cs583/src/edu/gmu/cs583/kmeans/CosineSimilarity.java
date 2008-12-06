@@ -1,4 +1,4 @@
-package edu.gmu.cs583.project.kmeans;
+package edu.gmu.cs583.kmeans;
 
 import Jama.Matrix;
 
