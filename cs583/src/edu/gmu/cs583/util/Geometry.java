@@ -11,8 +11,8 @@ public class Geometry {
 
 	public static void main(String[] args) {
 		Geometry geo = new Geometry();
-		Centroid cent = new Centroid(5, 20);
-		DataPoint point = new DataPoint(10, 30);
+		Centroid cent = new Centroid(5.0, 20.0);
+		DataPoint point = new DataPoint(10.0, 30.0);
 		geo.setDEBUG(true);
 		System.out.println(geo.getDistance(cent, point));
 	}

@@ -5,8 +5,8 @@ import java.awt.Color;
 public class Centroid {
 	//Id is a number from 1 - 12
 	private Integer CentroidId;
-	private Integer x;
-	private Integer y;
+	private Double x;
+	private Double y;
 	private Color centroidColor;
 	private Cluster cluster;
 	
@@ -14,7 +14,7 @@ public class Centroid {
 
 	}
 	
-	public Centroid(Integer x ,Integer y){
+	public Centroid(Double x ,Double y){
 		CentroidId = 1;
 		this.centroidColor = Color.black;
 		this.cluster = new Cluster();
@@ -23,7 +23,7 @@ public class Centroid {
 	}
 	
 	public Centroid(Integer centroidId, Color centroidColor, Cluster cluster,
-			Integer x, Integer y) {
+			Double x, Double y) {
 		CentroidId = centroidId;
 		this.centroidColor = centroidColor;
 		this.cluster = cluster;
@@ -39,19 +39,19 @@ public class Centroid {
 		CentroidId = centroidId;
 	}
 
-	public Integer getX() {
+	public Double getX() {
 		return x;
 	}
 
-	public void setX(Integer x) {
+	public void setX(Double x) {
 		this.x = x;
 	}
 
-	public Integer getY() {
+	public Double getY() {
 		return y;
 	}
 
-	public void setY(Integer y) {
+	public void setY(Double y) {
 		this.y = y;
 	}
 
@@ -71,7 +71,7 @@ public class Centroid {
 		this.cluster = cluster;
 	}
 	
-	public void setPoints(Integer x, Integer y){
+	public void setPoints(Double x, Double y){
 		this.x = x;
 		this.y = y;
 	}
