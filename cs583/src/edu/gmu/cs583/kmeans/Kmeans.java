@@ -1,6 +1,6 @@
-package edu.gmu.cs583.project.kmeans;
+package edu.gmu.cs583.kmeans;
 
-import edu.gmu.cs583.project.data.PointGenerator;
+import edu.gmu.cs583.data.PointGenerator;
 
 public class Kmeans {
 

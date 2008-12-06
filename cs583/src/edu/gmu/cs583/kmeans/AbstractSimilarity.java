@@ -1,4 +1,4 @@
-package edu.gmu.cs583.project.kmeans;
+package edu.gmu.cs583.kmeans;
 
 
 import org.apache.commons.collections.Transformer;

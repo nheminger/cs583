@@ -5,7 +5,7 @@
  * Description: DataPoint Class holds X and Y values for points.
  */
 
-package edu.gmu.cs583.project.data;
+package edu.gmu.cs583.data;
 
 import java.awt.Color;
 

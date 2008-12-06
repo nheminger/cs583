@@ -1,5 +1,5 @@
 // Source: src/main/java/com/mycompany/myapp/clustering/KMeansClusterer.java
-package edu.gmu.cs583.project.kmeans;
+package edu.gmu.cs583.kmeans;
 
 import java.util.ArrayList;
 import java.util.List;
