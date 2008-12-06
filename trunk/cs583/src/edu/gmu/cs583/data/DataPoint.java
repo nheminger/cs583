@@ -15,6 +15,7 @@ public class DataPoint implements Comparable<DataPoint>{
 	private Double y;
 	private Integer MembershipId;
 	private Color centroidMembership = null;
+	private boolean ownerChanged;
 	
 	public DataPoint(){
 		Double x = -1.0;
@@ -68,6 +69,14 @@ public class DataPoint implements Comparable<DataPoint>{
 
 	public void setCentroidMembership(Color centroidMembership) {
 		this.centroidMembership = centroidMembership;
+	}
+
+	public boolean isOwnerChanged() {
+		return ownerChanged;
+	}
+
+	public void setOwnerChanged(boolean ownerChanged) {
+		this.ownerChanged = ownerChanged;
 	}
 
 	@Override
