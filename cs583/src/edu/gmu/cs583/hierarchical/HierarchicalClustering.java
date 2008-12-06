@@ -57,12 +57,13 @@ public class HierarchicalClustering {
 
 	private Dendogram calculateSingleLinkClusters(Vector<DataPoint> data) {
 		Dendogram result = new Dendogram();
-	
+		//TODO: Compute cluster membership using single-link method.
 		return result;
 	}
 
 	private Dendogram calculateCompleteLinkClusters(Vector<DataPoint> data) {
 		Dendogram result = new Dendogram();
+		//TODO: Computer cluster membership using complete-link method.
 		return result;
 	}
 }
