@@ -47,7 +47,7 @@ public class Kmeans {
 	}
 	
 	public static void main(String[] args) {
-		Kmeans kmeans = new Kmeans(3,16, 100,100);  // test constructor using generated points
+		Kmeans kmeans = new Kmeans(3,500, 100,100);  // test constructor using generated points
 		String str = " ";
 		while(!str.equals("r")){
 	    try {
@@ -124,13 +124,14 @@ public class Kmeans {
 				Vector<DataPoint> temp = new Vector<DataPoint>();
 				temp = j.getCluster().getPoints();
 				
-				for(int i = 0; i < temp.size(); i++){
+				for(int i = 0; i < temp.size()-1; i++){
 					DataPoint pt = new DataPoint();
 					pt = temp.get(i);
-					x_mean =+ pt.getX();
-					y_mean =+ pt.getY();
+					x_mean += pt.getX();
+					y_mean += pt.getY();
 					
 				}
+				System.out.println("\ntotals: " + x_mean + "  " + y_mean); 
 				if(temp.size() > 0){
 					newPos.setPoints(Geometry.truncate(x_mean/temp.size()), Geometry.truncate(y_mean/temp.size()));
 					j.setDistanceMoved(Geometry.getDistance(j, newPos));
