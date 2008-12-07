@@ -120,9 +120,9 @@ public class Dendogram {
 		else {
 			for (int i = 0; i <= subDendograms.size() - 1; i++) {
 				if (i == subDendograms.size() - 1)
-					str += "\n\t" + subDendograms.toString();
+					str += subDendograms.get(i).toString();
 				else
-					str += "\n\t" + subDendograms.toString() + ", ";
+					str += subDendograms.get(i).toString() + ", ";
 			}
 		}
 
