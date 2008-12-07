@@ -47,7 +47,7 @@ public class DataPoint implements Comparable<DataPoint>{
 	}
 	
 	public String toString(){
-		return x.toString() + ":" + y.toString() + "\t" + this.MembershipId;
+		return x.toString() + "\t" + y.toString() + "\t" + this.MembershipId;
 	}
 	
 	public void setPoints(Integer x, Integer y){
