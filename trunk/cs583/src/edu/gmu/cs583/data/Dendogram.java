@@ -114,7 +114,7 @@ public class Dendogram {
 	 * String representation of the Dendogram.
 	 */
 	public String toString() {
-		String str = "{\n\t";
+		String str = "{";
 		if (subDendograms.isEmpty())
 			str += "(" + value.getX() + ", " + value.getY() + ")";
 		else {
@@ -126,7 +126,7 @@ public class Dendogram {
 			}
 		}
 
-		str += "\n\t}";
+		str += "}";
 		return str;
 	}
 	
