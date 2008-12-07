@@ -1,59 +1,59 @@
 1.0 Programs
 	1.1 Kmeans
-		implementation		<-- done
-		testing			<-- done
-		output ploting data	<-- in-progress
+		implementation			<-- done
+		testing					<-- done
+		output ploting data		<-- in-progress
 		optimazation dist table <-- in-progress
 	1.2 hierarchical
-		implementation		<-- done
-		testing			<-- in-progress
-		output ploting data	<-- in-progress
-		optimazation 		<-- in-progress
+		implementation			<-- done
+		testing					<-- in-progress
+		output ploting data		<-- in-progress
+		optimazation 			<-- in-progress
 	1.3 r-tree
-		implementation		<-- in-progress
-		testing			<-- in-progress
-		output ploting data	<-- in-progress
-		optimazation 		<-- in-progress
+		implementation			<-- in-progress
+		testing					<-- in-progress
+		output ploting data		<-- in-progress
+		optimazation 			<-- in-progress
 2.0 data analysis
 	2.1 kmeans O(n*k)
-		testing			<-- in-progress
-		space complexity	<-- in-progress
-		time complexity		<-- in-progress
-		pros			<-- in-progress
-		cons			<-- in-progress
+		testing					<-- in-progress
+		space complexity		<-- in-progress
+		time complexity			<-- in-progress
+		pros					<-- in-progress
+		cons					<-- in-progress
 	2.2 hierarchical O(n^2)
-		testing			<-- in-progress
-		space complexity	<-- in-progress
-		time complexity		<-- in-progress
-		pros			<-- in-progress
-		cons			<-- in-progress
+		testing					<-- in-progress
+		space complexity		<-- in-progress
+		time complexity			<-- in-progress
+		pros					<-- in-progress
+		cons					<-- in-progress
 	2.3 r-tree O(?)
-		testing			<-- in-progress
-		space complexity	<-- in-progress
-		time complexity		<-- in-progress
-		pros			<-- in-progress
-		cons			<-- in-progress
+		testing					<-- in-progress
+		space complexity		<-- in-progress
+		time complexity			<-- in-progress
+		pros					<-- in-progress
+		cons					<-- in-progress
 
 3.0 Paper
 	3.1 draft(s)
-		intro			<-- in-progress
-		kmeans			<-- in-progress
-		hierarchical		<-- in-progress
-		r-tree*			<-- in-progress
-		GIS			<-- in-progress
-		con			<-- in-progress
+		intro					<-- in-progress
+		kmeans					<-- in-progress
+		hierarchical			<-- in-progress
+		r-tree*					<-- in-progress
+		GIS						<-- in-progress
+		con						<-- in-progress
 	3.2 final draft
-		intro			<-- in-progress
-		kmeans			<-- in-progress
-		hierarchical		<-- in-progress
-		r-tree*			<-- in-progress
-		GIS			<-- in-progress
-		con			<-- in-progress
+		intro					<-- in-progress
+		kmeans					<-- in-progress
+		hierarchical			<-- in-progress
+		r-tree*					<-- in-progress
+		GIS						<-- in-progress
+		con						<-- in-progress
 4.0 Presentation Prep
 	4.1 Power Point
 	4.2 Talking Points
-		GIS			Nathan
-		kmeans			Alex
-		hierarchical		Chris
-		r-tree			Nathan
-		questions		All
+		GIS						Nathan
+		kmeans					Alex
+		hierarchical			Chris
+		r-tree					Nathan
+		questions				All
