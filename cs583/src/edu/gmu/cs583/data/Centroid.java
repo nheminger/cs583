@@ -8,7 +8,7 @@ public class Centroid {
 	private Double x;
 	private Double y;
 	private Color centroidColor;
-	private Cluster cluster;
+	private Cluster cluster = new Cluster();
 	private boolean hasMoved;
 	private Double distanceMoved = 0.0;
 	public Centroid(){
@@ -95,6 +95,6 @@ public class Centroid {
 	}
 
 	public String toString(){
-		return this.CentroidId +"\t"+ x.toString() + ":" + y.toString() + distanceMoved;
+		return this.CentroidId +"\t"+ x.toString() + ":" + y.toString() + "\t" + distanceMoved;
 	}	
 }
