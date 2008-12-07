@@ -63,15 +63,16 @@ public class HierarchicalSimilarityMatrix {
 	 */
 	public void calculateSimilarity() {
 		for (int i = 0; i <= clusters.size() - 1; i++) {
-			for (int j = 0; i <= clusters.size() - 1; j++) {
+			for (int j = 0; j <= clusters.size() - 1; j++) {
 				// calculate similarities
-				Dendogram cluster_J = new Dendogram();
-				Dendogram cluster_K = new Dendogram();
+				Dendogram cluster_J = clusters.get(i);
+				Dendogram cluster_K = clusters.get(j);
 				Similarity similarity = new Similarity();
 				similarity.setPoint_J(cluster_J);
 				similarity.setPoint_K(cluster_K);
 				similarity.setSimilarity(Geometry.getEuclideanDistance(
 						cluster_J.getCentroid(), cluster_K.getCentroid()));
+				similarityList.addElement(similarity);
 			}
 		}
 	}
