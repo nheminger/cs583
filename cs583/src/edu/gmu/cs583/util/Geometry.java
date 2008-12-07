@@ -45,7 +45,7 @@ public class Geometry {
 		return DEBUG;
 	}
 
-	public void setDEBUG(boolean debug) {
+	public static void setDEBUG(boolean debug) {
 		DEBUG = debug;
 	}
 }

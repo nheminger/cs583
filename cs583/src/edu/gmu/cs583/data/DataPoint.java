@@ -13,7 +13,7 @@ import java.awt.Color;
 public class DataPoint implements Comparable<DataPoint>{
 	private Double x;
 	private Double y;
-	private Integer MembershipId;
+	private Integer MembershipId = -1;
 	private Color centroidMembership = null;
 	private boolean ownerChanged = false;
 	
@@ -47,7 +47,7 @@ public class DataPoint implements Comparable<DataPoint>{
 	}
 	
 	public String toString(){
-		return x.toString() + ":" + y.toString();
+		return x.toString() + ":" + y.toString() + "\t" + this.MembershipId;
 	}
 	
 	public void setPoints(Integer x, Integer y){
@@ -55,6 +55,11 @@ public class DataPoint implements Comparable<DataPoint>{
 		this.y = y.doubleValue();
 	}
 
+	public void setPoints(Double x, Double y){
+		this.x = x.doubleValue();
+		this.y = y.doubleValue();
+	}
+	
 	public Integer getMembershipId() {
 		return MembershipId;
 	}
