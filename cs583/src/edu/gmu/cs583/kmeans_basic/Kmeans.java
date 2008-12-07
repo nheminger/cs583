@@ -164,13 +164,14 @@ public class Kmeans {
 	}
 
 	public String toString(){
-//		Integer k = 0;
+		Integer k = 0;
 		String str = new String();
-//		str = "----- Data Points -----\nptId\tpos\t\tcentId\n";
-//		for(DataPoint i : dataPoints){
-//			str = str + k + "\t" + i + "\n";
-//			k++;
-//		}
+		str = "----- Data Points -----\nptId\tpos\t\tcentId\n";
+		for(DataPoint i : dataPoints){
+			//str = str + k + "\t" + i + "\n";
+			str = str + i + "\n";
+			k++;
+		}
 
 		str = str + "\n\n" + "----- Centroidr Points -----\ncentId\tpos\t\tdistMoved\tnumberOfPts\n";;
 		for(Centroid j: centroids){
