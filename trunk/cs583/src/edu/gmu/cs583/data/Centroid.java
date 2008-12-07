@@ -10,7 +10,7 @@ public class Centroid {
 	private Color centroidColor;
 	private Cluster cluster;
 	private boolean hasMoved;
-	
+	private Double distanceMoved = 0.0;
 	public Centroid(){
 
 	}
@@ -84,8 +84,17 @@ public class Centroid {
 	public void setHasMoved(boolean hasMoved) {
 		this.hasMoved = hasMoved;
 	}
+	
+
+	public Double getDistanceMoved() {
+		return distanceMoved;
+	}
+
+	public void setDistanceMoved(Double distanceMoved) {
+		this.distanceMoved = distanceMoved;
+	}
 
 	public String toString(){
-		return x.toString() + ":" + y.toString();
+		return this.CentroidId +"\t"+ x.toString() + ":" + y.toString() + distanceMoved;
 	}	
 }
