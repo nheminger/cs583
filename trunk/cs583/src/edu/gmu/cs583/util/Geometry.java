@@ -52,11 +52,12 @@ public class Geometry {
 	}
 	
     public static double truncate (double x){
+    	System.out.println("\tbefore formatt "+x);
         DecimalFormat df = new  DecimalFormat ("0.##");
         String d = df.format (x);
-        System.out.println ("\tformatted: " + d);
         d = d.replaceAll (",", ".");
         Double dbl = new Double (d);
+        System.out.println("\tformatted: " +dbl);
         return dbl.doubleValue ();
     }
 }
