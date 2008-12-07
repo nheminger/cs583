@@ -27,7 +27,7 @@ public class Geometry {
 					+ point.toString() + " Distance: "
 					+ Math.sqrt(xVals + yVals));
 
-		return Math.sqrt(xVals + yVals);
+		return truncate(Math.sqrt(xVals + yVals));
 	}
 	
 	/**
@@ -52,12 +52,10 @@ public class Geometry {
 	}
 	
     public static double truncate (double x){
-    	System.out.println("\tbefore formatt "+x);
         DecimalFormat df = new  DecimalFormat ("0.##");
         String d = df.format (x);
         d = d.replaceAll (",", ".");
         Double dbl = new Double (d);
-        System.out.println("\tformatted: " +dbl);
         return dbl.doubleValue ();
     }
 }
