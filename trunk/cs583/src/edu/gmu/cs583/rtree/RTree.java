@@ -2,6 +2,10 @@ package edu.gmu.cs583.rtree;
 
 import java.util.Vector;
 
+import edu.gmu.cs583.data.DataPoint;
+import edu.gmu.cs583.data.PointGenerator;
+import edu.gmu.cs583.util.Geometry;
+
 public class RTree {
 	public static final int QUADRATICSPLIT = 0;
 	public static final int LINEARSPLIT = 1;
@@ -63,33 +67,98 @@ public class RTree {
 		m = minentries;
 	}
 
+	
+	// adapted from http://gis.umb.no/gis/applets/rtree2/jdk1.1/noumbgisrtree.jar
 	@SuppressWarnings({"unchecked","unused"})
 	public static void main(String[] args) {
-		RTree rtree = new RTree(2);
+
+		int numberOfPoints = 5000;
+		int clusters = 6;
+		int maxEntries = numberOfPoints / clusters;
+		
+		System.out.println("Using a max entries of " + maxEntries);
+
+		RTree rtree = new RTree(maxEntries);
 		System.out.println("Entering RTree");
-		rtree.insert(new RTreeLeafEntry(null, new BoundingBox(10.0, 10.0, 20.0,20.0)));
-		rtree.insert(new RTreeLeafEntry(null, new BoundingBox(15.0, 15.0, 25.0,25.0)));
-		rtree.insert(new RTreeLeafEntry(null, new BoundingBox(5.0, 5.0, 15.0,15.0)));
-		rtree.insert(new RTreeLeafEntry(null, new BoundingBox(20.0, 20.0, 30.0,30.0)));
-		rtree.insert(new RTreeLeafEntry(null, new BoundingBox(0.0, 0.0, 10.0,10.0)));
 		
-		rtree.iterateTree(rtree.getRoot());
+
+		PointGenerator gen = new PointGenerator(numberOfPoints);
+		gen.GeneratePoints();
+		Vector<DataPoint> points = gen.GetPointsVector();
+		for (int i = 0; i < points.size(); i++) {
+			DataPoint dp = points.get(i);
+			rtree.insert(new RTreeLeafEntry(null, new BoundingBox(dp.getX(), dp.getY(), dp.getX(), dp.getY())));
+		}
 		
-		Vector endClusters = rtree.search(new BoundingBox(Double.MIN_VALUE, Double.MIN_VALUE, Double.MAX_VALUE, Double.MAX_VALUE));
+		
+//		rtree.insert(new RTreeLeafEntry(null, new BoundingBox(10.0, 10.0, 20.0,20.0)));
+//		rtree.insert(new RTreeLeafEntry(null, new BoundingBox(15.0, 15.0, 25.0,25.0)));
+//		rtree.insert(new RTreeLeafEntry(null, new BoundingBox(5.0, 5.0, 15.0,15.0)));
+//		rtree.insert(new RTreeLeafEntry(null, new BoundingBox(20.0, 20.0, 30.0,30.0)));
+//		rtree.insert(new RTreeLeafEntry(null, new BoundingBox(0.0, 0.0, 10.0,10.0)));
+//		rtree.insert(new RTreeLeafEntry(null, new BoundingBox(6.0, 3.0, 53.0,10.0)));
+//		rtree.insert(new RTreeLeafEntry(null, new BoundingBox(36.0, 36.0, 43.0,43.0)));
+//		rtree.insert(new RTreeLeafEntry(null, new BoundingBox(64.0, 20.0, 64.0,20.0)));
+//		rtree.insert(new RTreeLeafEntry(null, new BoundingBox(54.0, 3.0, 64.0,53.0)));
+//		rtree.insert(new RTreeLeafEntry(null, new BoundingBox(4.0, 4.0, 54.0,54.0)));
+		
+		
+		rtree.iterateTree(rtree.getRoot(), 1);
+		
+		//Vector endClusters = rtree.search(new BoundingBox(Double.MIN_VALUE, Double.MIN_VALUE, Double.MAX_VALUE, Double.MAX_VALUE));
 
 		
 		System.out.println("Leaving RTree");
 	}
 	
+	public void visitAllChildren(RTreeNode leaf, int branchId) {
+		for (int i = 0; i < leaf.entries.size(); i++) {
+			//System.out.println("Leaf entry [" + branchId + "]: " + leaf.getParent().entries.get(i));
+			BoundingBox bbox = ((RTreeEntry)leaf.entries.get(i)).getI();
+			System.out.println( bbox.getLeft() + "\t" + bbox.getLower() + "\t" + branchId);
+		}
+	}
+	
+	public synchronized RTreeLeafNode iterateTree(RTreeNode currentNode, int branchId) {
+
+		//System.out.println("CLUSTER");
+		if (currentNode.isLeaf()) {
+			// visit siblings here?
+			visitAllChildren(currentNode, branchId);
+			return (RTreeLeafNode) currentNode;
+		}
+		
+		for (int i = 0; i < currentNode.entries.size(); i++) {
+			RTreeInternalEntry preferredie = (RTreeInternalEntry) currentNode.entries.elementAt(i);
+			iterateTree(preferredie.getPointer(), branchId++);
+		}
+		
+		return null;
+	}
+	/*
+	public void visitAllChildren(RTreeNode leaf) {
+		for (int i = 0; i < leaf.getParent().entries.size(); i++) {
+			System.out.println("Leaf entry: " + leaf.getParent().entries.get(i));
+		}
+	}
+	
 	public synchronized RTreeLeafNode iterateTree(RTreeNode currentNode) {
 
-		if (currentNode.isLeaf())
+		System.out.println("CLUSTER");
+		if (currentNode.isLeaf()) {
+			// visit siblings here?
+			visitAllChildren(currentNode);
 			return (RTreeLeafNode) currentNode;
+		}
 		
-		RTreeInternalEntry preferredie = (RTreeInternalEntry) currentNode.entries.elementAt(0);
-
-		return iterateTree(preferredie.getPointer());
-	}
+		
+		for (int i = 0; i < currentNode.entries.size(); i++) {
+			RTreeInternalEntry preferredie = (RTreeInternalEntry) currentNode.entries.elementAt(i);
+			return iterateTree(preferredie.getPointer());
+		}
+		
+		return null;
+	} */
 	
 	public RTreeNode getRoot() {
 		return root;
