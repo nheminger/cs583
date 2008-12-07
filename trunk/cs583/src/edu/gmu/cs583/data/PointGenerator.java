@@ -39,14 +39,24 @@ public class PointGenerator {
 	public PointGenerator(Integer x, Integer y, Integer numberOfPoints){
 		x_range = x+1;
 		y_range = y+1;
-		number_of_points = numberOfPoints;
+		if((x_range * y_range) < numberOfPoints){
+			number_of_points = numberOfPoints;
+		}
+		else{
+			number_of_points = (x_range * y_range) - 1;
+		}
 		GeneratePoints();
 	}
 	
 	public PointGenerator(Integer x, Integer y, Integer numberOfPoints, boolean debug){
 		x_range = x+1;
 		y_range = y+1;
+		if((x_range * y_range) < numberOfPoints){
 		number_of_points = numberOfPoints;
+		}
+		else{
+			number_of_points = (x_range * y_range) - 1;
+		}
 		GeneratePoints();
 		this.DEBUG = debug;
 	}
