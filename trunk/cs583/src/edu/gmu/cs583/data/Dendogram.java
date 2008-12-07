@@ -129,4 +129,15 @@ public class Dendogram {
 		str += "}";
 		return str;
 	}
+	
+	public boolean equals(Dendogram anotherDendogram) {
+		boolean equal = false;
+		
+		if(this.getCentroid().getX().equals(anotherDendogram.getCentroid().getX())
+				&& this.getCentroid().getY().equals(anotherDendogram.getCentroid().getY())) {
+			equal = true;
+		}
+		
+		return equal;
+	}
 }
