@@ -38,7 +38,7 @@ public class Kmeans {
 			number_of_centroids = 3;
 		}
 		distanceTable = new Double[number_of_points][number_of_centroids];
-		Geometry.setDEBUG(true);
+		Geometry.setDEBUG(false);
 		makecolors();
 		PointGenerator gen = new PointGenerator(numberOfDataPoints);
 		gen.GeneratePoints();
@@ -55,6 +55,8 @@ public class Kmeans {
 	        System.out.print("> ");
 	        str = in.readLine();
 	        System.out.println(kmeans);
+	        kmeans.calulateMembership();
+	        kmeans.recomputeCentroids();
 	    } catch (IOException e) {
 	    }
 
@@ -77,13 +79,12 @@ public class Kmeans {
 			i.setPoints(dataPoints.get(t).getX(),dataPoints.get(t).getY());
 			i.setCentroidColor(colors.get(t));
 			t++;
-			if(DEBUG){
-				System.out.println(i.toString());
-			}
 		}
 	}
 	
 	public void calulateMembership(){
+		if(DEBUG)
+			System.out.println("calulate mebership");
 		double minDistance = Double.MAX_VALUE;
 		Integer pointsChanged = 0;
 		Vector<Centroid> movedCentroids = new Vector<Centroid>();
@@ -99,6 +100,7 @@ public class Kmeans {
 			Centroid tempcent = new Centroid();
 			for(Centroid j: centroids){
 				if (minDistance > Geometry.getDistance(j,i)){
+					minDistance = Geometry.getDistance(j,i);
 					tempcent = j;
 				}
 			}
@@ -110,13 +112,12 @@ public class Kmeans {
 			minDistance = Double.MAX_VALUE;
 			
 		}
-		System.out.println(" ");
-		System.out.println("number of points changed ownership " + pointsChanged);
-		System.out.println(" ");
+
 	}
 	
 	public void recomputeCentroids(){
-		
+		if(DEBUG)
+			System.out.println("recompute centroids");
 			for(Centroid j: centroids){
 				Double x_mean = 0.0, y_mean = 0.0;
 				DataPoint newPos = new DataPoint();
@@ -130,10 +131,11 @@ public class Kmeans {
 					y_mean =+ pt.getY();
 					
 				}
-				newPos.setPoints(x_mean/temp.size(), y_mean/temp.size());
-				j.setDistanceMoved(Geometry.getDistance(j, newPos));
-				j.setPoints(x_mean/temp.size(), y_mean/temp.size());
-				
+				if(temp.size() > 0){
+					newPos.setPoints(Geometry.truncate(x_mean/temp.size()), Geometry.truncate(y_mean/temp.size()));
+					j.setDistanceMoved(Geometry.getDistance(j, newPos));
+					j.setPoints(Geometry.truncate(x_mean/temp.size()), Geometry.truncate(y_mean/temp.size()));
+				}
 				if(DEBUG){
 				System.out.println("------ centroid " + j.getCentroidId() + " ------");	
 					for(DataPoint i: j.getCluster().getPoints()){
@@ -170,7 +172,7 @@ public class Kmeans {
 			k++;
 		}
 
-		str = str + "\n\n" + "----- Centroidr Points -----\ncentId\tpos\t\tdistmoved\n";;
+		str = str + "\n\n" + "----- Centroidr Points -----\ncentId\tpos\t\tdistMoved\tnumberOfPts\n";;
 		for(Centroid j: centroids){
 			str = str + j + "\n";
 		
