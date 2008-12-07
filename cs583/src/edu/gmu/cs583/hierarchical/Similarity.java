@@ -66,4 +66,20 @@ public class Similarity implements Comparable<Similarity> {
 	public int compareTo(Similarity anotherSimilarity) {
 		return similarity.compareTo(anotherSimilarity.getSimilarity());
 	}
+	
+	/**
+	 * Compares two similarity objects.
+	 * @param anotherSimilarity another similarity object.
+	 * @return true if two Similarity objects are equal, false otherwise.
+	 */
+	public boolean equals(Similarity anotherSimilarity) {
+		boolean equal = false;
+		
+		Dendogram point_J = anotherSimilarity.getPoint_J();
+		Dendogram point_K = anotherSimilarity.getPoint_K();
+		if(point_J.equals(point_K))
+			equal = true;
+		
+		return equal;
+	}
 }
