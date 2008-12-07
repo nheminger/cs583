@@ -39,7 +39,7 @@ public class PointGenerator {
 	public PointGenerator(Integer x, Integer y, Integer numberOfPoints){
 		x_range = x+1;
 		y_range = y+1;
-		if((x_range * y_range) < numberOfPoints){
+		if((x_range * y_range) > numberOfPoints){
 			number_of_points = numberOfPoints;
 		}
 		else{
@@ -51,7 +51,7 @@ public class PointGenerator {
 	public PointGenerator(Integer x, Integer y, Integer numberOfPoints, boolean debug){
 		x_range = x+1;
 		y_range = y+1;
-		if((x_range * y_range) < numberOfPoints){
+		if((x_range * y_range) > numberOfPoints){
 		number_of_points = numberOfPoints;
 		}
 		else{
