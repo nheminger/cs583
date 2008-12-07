@@ -47,7 +47,7 @@ public class Kmeans {
 	}
 	
 	public static void main(String[] args) {
-		Kmeans kmeans = new Kmeans(3,500, 100,100);  // test constructor using generated points
+		Kmeans kmeans = new Kmeans(3,1000, 100,100);  // test constructor using generated points
 		String str = " ";
 		while(!str.equals("r")){
 	    try {
@@ -131,7 +131,6 @@ public class Kmeans {
 					y_mean += pt.getY();
 					
 				}
-				System.out.println("\ntotals: " + x_mean + "  " + y_mean); 
 				if(temp.size() > 0){
 					newPos.setPoints(Geometry.truncate(x_mean/temp.size()), Geometry.truncate(y_mean/temp.size()));
 					j.setDistanceMoved(Geometry.getDistance(j, newPos));
@@ -165,13 +164,13 @@ public class Kmeans {
 	}
 
 	public String toString(){
-		Integer k = 0;
+//		Integer k = 0;
 		String str = new String();
-		str = "----- Data Points -----\nptId\tpos\t\tcentId\n";
-		for(DataPoint i : dataPoints){
-			str = str + k + "\t" + i + "\n";
-			k++;
-		}
+//		str = "----- Data Points -----\nptId\tpos\t\tcentId\n";
+//		for(DataPoint i : dataPoints){
+//			str = str + k + "\t" + i + "\n";
+//			k++;
+//		}
 
 		str = str + "\n\n" + "----- Centroidr Points -----\ncentId\tpos\t\tdistMoved\tnumberOfPts\n";;
 		for(Centroid j: centroids){
