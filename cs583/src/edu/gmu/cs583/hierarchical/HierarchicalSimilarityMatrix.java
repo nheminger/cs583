@@ -78,4 +78,76 @@ public class HierarchicalSimilarityMatrix {
 			}
 		}
 	}
+
+	@SuppressWarnings("unchecked")
+	public void updateSimilarities(Dendogram oldCluster_x,
+			Dendogram oldCluster_y, Dendogram updated) {
+		Vector<Dendogram> _clusters = (Vector<Dendogram>) clusters.clone();
+		Vector<Similarity> _similarityList = (Vector<Similarity>) similarityList
+				.clone();
+
+		int i = 0;
+		while (i <= clusters.size() - 1) {
+			Dendogram dendogram = clusters.get(i);
+			if (dendogram.equals(oldCluster_x)) {
+				_clusters.remove(dendogram); // remove dendogram from list
+			} else if (dendogram.equals(oldCluster_y)) {
+				_clusters.remove(dendogram); // remove dendogram from list
+			} else {
+				Similarity sim = new Similarity();
+
+				// update similarity rows
+				sim.setPoint_J(updated);
+				sim.setPoint_K(dendogram);
+				sim.setSimilarity(Geometry.getEuclideanDistance(updated
+						.getCentroid(), dendogram.getCentroid()));
+				_similarityList.addElement(sim);
+
+				// update similarity cols
+				sim = new Similarity();
+				sim.setPoint_J(dendogram);
+				sim.setPoint_K(updated);
+				sim.setSimilarity(Geometry.getEuclideanDistance(dendogram
+						.getCentroid(), updated.getCentroid()));
+				_similarityList.addElement(sim);
+			}
+			
+			// remove old similarity rows
+			Similarity sim = new Similarity();
+			sim.setPoint_J(oldCluster_x);
+			sim.setPoint_K(dendogram);
+			_similarityList.remove(sim);
+
+			// remove old similarity cols
+			sim = new Similarity();
+			sim.setPoint_J(dendogram);
+			sim.setPoint_K(oldCluster_x);
+			_similarityList.remove(sim);
+
+			// remove old similarity rows
+			sim = new Similarity();
+			sim.setPoint_J(oldCluster_y);
+			sim.setPoint_K(dendogram);
+			_similarityList.remove(sim);
+
+			// remove old similarity cols
+			sim = new Similarity();
+			sim.setPoint_J(dendogram);
+			sim.setPoint_K(oldCluster_y);
+			_similarityList.remove(sim);
+			
+			i++;
+		}
+
+		_clusters.addElement(updated);
+		
+		if(clusters.size() <= _clusters.size())
+			System.err.println("Cluster size is increasing!");
+		
+		if(similarityList.size() <= _similarityList.size())
+			System.err.println("Similarity matrix is increasing!");
+		
+		clusters = _clusters;
+		similarityList = _similarityList;
+	}
 }
