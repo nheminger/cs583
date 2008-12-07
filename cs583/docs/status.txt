@@ -14,6 +14,7 @@
 		testing					<-- in-progress
 		output ploting data		<-- in-progress
 		optimazation 			<-- in-progress
+		
 2.0 data analysis
 	2.1 kmeans O(n*k)
 		testing					<-- in-progress
@@ -49,8 +50,13 @@
 		r-tree*					<-- in-progress
 		GIS						<-- in-progress
 		con						<-- in-progress
+		
 4.0 Presentation Prep
 	4.1 Power Point
+		GIS						All
+		kmeans					Alex
+		hierarchical			Chris
+		r-tree					Nathan
 	4.2 Talking Points
 		GIS						Nathan
 		kmeans					Alex
