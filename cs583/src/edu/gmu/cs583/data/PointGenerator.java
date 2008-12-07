@@ -36,14 +36,14 @@ public class PointGenerator {
 	}
 	
 	
-	PointGenerator(Integer x, Integer y, Integer numberOfPoints){
+	public PointGenerator(Integer x, Integer y, Integer numberOfPoints){
 		x_range = x+1;
 		y_range = y+1;
 		number_of_points = numberOfPoints;
 		GeneratePoints();
 	}
 	
-	PointGenerator(Integer x, Integer y, Integer numberOfPoints, boolean debug){
+	public PointGenerator(Integer x, Integer y, Integer numberOfPoints, boolean debug){
 		x_range = x+1;
 		y_range = y+1;
 		number_of_points = numberOfPoints;
