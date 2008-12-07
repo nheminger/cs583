@@ -21,10 +21,11 @@ public class HierarchicalClustering {
 	public static void main(String[] args) throws Exception {
 
 		HierarchicalClustering clustering = new HierarchicalClustering(
-				LINK_TYPE.SINGLE_LINK);
-		PointGenerator generator = new PointGenerator(15, 15, 300);
+				LINK_TYPE.COMPLETE_LINK);
+		PointGenerator generator = new PointGenerator(15, 15, 121);
 		generator.GeneratePoints();
 		Vector<DataPoint> points = generator.GetPointsVector();
+
 		System.out.print(clustering.calculateClusters(points));
 	}
 

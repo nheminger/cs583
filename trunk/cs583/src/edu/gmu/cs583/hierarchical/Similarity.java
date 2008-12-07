@@ -72,12 +72,13 @@ public class Similarity implements Comparable<Similarity> {
 	 * @param anotherSimilarity another similarity object.
 	 * @return true if two Similarity objects are equal, false otherwise.
 	 */
-	public boolean equals(Similarity anotherSimilarity) {
+	public boolean equals(Object anotherObj) {
 		boolean equal = false;
-		
+		Similarity anotherSimilarity = (Similarity) anotherObj;
 		Dendogram point_J = anotherSimilarity.getPoint_J();
 		Dendogram point_K = anotherSimilarity.getPoint_K();
-		if(point_J.equals(point_K))
+		if(point_J.equals(this.getPoint_J()) &&
+				point_K.equals(this.getPoint_K()))
 			equal = true;
 		
 		return equal;
