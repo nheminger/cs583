@@ -22,7 +22,7 @@ public class HierarchicalClustering {
 
 		HierarchicalClustering clustering = new HierarchicalClustering(
 				LINK_TYPE.SINGLE_LINK);
-		PointGenerator generator = new PointGenerator(1000, 1000, 100);
+		PointGenerator generator = new PointGenerator(15, 15, 300);
 		generator.GeneratePoints();
 		Vector<DataPoint> points = generator.GetPointsVector();
 		System.out.print(clustering.calculateClusters(points));
