@@ -1,5 +1,7 @@
 package edu.gmu.cs583.util;
 
+import java.text.DecimalFormat;
+
 import edu.gmu.cs583.data.Centroid;
 import edu.gmu.cs583.data.DataPoint;
 
@@ -48,4 +50,13 @@ public class Geometry {
 	public static void setDEBUG(boolean debug) {
 		DEBUG = debug;
 	}
+	
+    public static double truncate (double x){
+        DecimalFormat df = new  DecimalFormat ("0.##");
+        String d = df.format (x);
+        System.out.println ("\tformatted: " + d);
+        d = d.replaceAll (",", ".");
+        Double dbl = new Double (d);
+        return dbl.doubleValue ();
+    }
 }
