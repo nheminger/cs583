@@ -19,7 +19,9 @@ public class Dendogram {
 	 * Default Constructor
 	 */
 	public Dendogram() {
-		super();
+		subDendograms = new Vector<Dendogram>();
+		value = new DataPoint();
+		centroid = new DataPoint();
 	}
 
 	/**
@@ -30,6 +32,8 @@ public class Dendogram {
 	 */
 	public Dendogram(DataPoint value) {
 		this.value = value;
+		this.centroid = value;
+		this.subDendograms = new Vector<Dendogram>();
 	}
 
 	/**
@@ -51,6 +55,8 @@ public class Dendogram {
 
 		if (subDendograms.size() > 1) {
 			centroid = new DataPoint();
+			centroid.setX(new Double(0));
+			centroid.setY(new Double(0));
 			int count = 0;
 			for (Dendogram dendogram : subDendograms) {
 				centroid.setX(centroid.getX()
@@ -114,9 +120,9 @@ public class Dendogram {
 		else {
 			for (int i = 0; i <= subDendograms.size() - 1; i++) {
 				if (i == subDendograms.size() - 1)
-					str += "\n" + subDendograms.toString();
+					str += "\n\t" + subDendograms.toString();
 				else
-					str += "\n" + subDendograms.toString() + ", ";
+					str += "\n\t" + subDendograms.toString() + ", ";
 			}
 		}
 
