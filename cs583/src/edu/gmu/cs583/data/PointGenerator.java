@@ -37,14 +37,16 @@ public class PointGenerator {
 	
 	
 	public PointGenerator(Integer x, Integer y, Integer numberOfPoints){
-		x_range = x+1;
-		y_range = y+1;
-		if((x_range * y_range) > numberOfPoints){
+		long tempx = x, tempy = y;
+		x_range = x;
+		y_range = y;
+		if((tempx * tempy) > numberOfPoints){
 			number_of_points = numberOfPoints;
 		}
 		else{
 			number_of_points = (x_range * y_range) - 1;
 		}
+		System.out.println("PointGEn: "+ number_of_points);
 		GeneratePoints();
 	}
 	
