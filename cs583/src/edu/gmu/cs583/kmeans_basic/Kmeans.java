@@ -3,6 +3,8 @@ package edu.gmu.cs583.kmeans_basic;
 import java.awt.Color;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -51,15 +53,15 @@ public class Kmeans {
 	}
 	
 	public static void main(String[] args) {
-		//for(int i = 2; i < 10; i++){  // testing range of centroids 2 - 10 
+		for(int i = 2; i < 10; i++){  // testing range of centroids 2 - 10 
 			for(Integer h: pointSize){ // points size 10 - 100000 increasing by a factor of 10 each test
-				Kmeans kmeans = new Kmeans(8 ,h ,h, h);
-				for(int k = 0; k < 1; k++ ){ // run test 100 times
+				Kmeans kmeans = new Kmeans(i ,h ,h, h);
+				for(int k = 0; k < 100; k++ ){ // run test 100 times
 					System.out.println("running test...");
 					kmeans.runKmeans(kmeans);
 				}
 			}
-		//}
+		}
 	}
 	
 	public void runKmeans(Kmeans kmeans){
@@ -69,24 +71,29 @@ public class Kmeans {
 			iterations++;
 			kmeans.calulateMembership();
 			kmeans.recomputeCentroids();
-			System.out.println(kmeans);
 		}while(!kmeans.isDone());
 		long endtime = System.currentTimeMillis();
 		System.out.println(iterations +" ");
-		//logStats(kmeans.getCentroids().size(), kmeans.getDataPoints().size(), (endtime - starttime), iterations); 
+		logStats(kmeans.getCentroids().size(), kmeans.getDataPoints().size(), (endtime - starttime), iterations); 
 	}
 	
 	public void logStats(Integer number_of_cents, Integer number_of_pts, long time,Integer iters){
-		   try{
-			    // Create file 
-			    FileWriter fstream = new FileWriter("c:\\stats.txt");
-			        BufferedWriter out = new BufferedWriter(fstream);
-			    out.append(number_of_cents+":"+number_of_pts+":"+time+":"+iters+"\n");
-			    //Close the output stream
-			    out.close();
-			    }catch (Exception e){//Catch exception if any
-			      System.err.println("Error: " + e.getMessage());
-			    }
+		   
+		try{
+			     File f=new File("c:\\stats.txt");
+			      if(f.exists()){
+			      String str= number_of_cents + ":" + number_of_pts+ ":" + time + ":" + iters + "\n";
+			          BufferedWriter out = new BufferedWriter(new FileWriter(f, true));
+			          out.write(str);
+			          out.close();
+			          //System.out.println("The data has been written");
+			          }
+			          else
+			            System.out.println("This file is not exist");
+		}catch (Exception e){
+			System.out.println("LOG STATS ERROR: writing to file failed");
+		}
+			    
 	}
 	
 	public void createCentroids(){
@@ -158,13 +165,13 @@ public class Kmeans {
 					newPos.setPoints(Geometry.truncate(x_mean/temp.size()), Geometry.truncate(y_mean/temp.size()));
 					j.setDistanceMoved(Geometry.getDistance(j, newPos));
 					j.setPoints(Geometry.truncate(x_mean/temp.size()), Geometry.truncate(y_mean/temp.size()));
-					System.out.println("x total: " + x_mean + " y total: " + y_mean + "(n) cent pos: " + x_mean/temp.size()+ " -- " + y_mean/temp.size());
+					//System.out.println("x total: " + x_mean + " y total: " + y_mean + "(n) cent pos: " + x_mean/temp.size()+ " -- " + y_mean/temp.size());
 				}
 				else if(temp.size() == 1){
 					newPos.setPoints(x_mean,y_mean);
 					j.setDistanceMoved(Geometry.getDistance(j, newPos));
 					j.setPoints(x_mean,y_mean);
-					System.out.println("x total: " + x_mean + " y total: " + y_mean + "(1) cent pos: " + j.getX() + " -- " + j.getY());
+					//System.out.println("x total: " + x_mean + " y total: " + y_mean + "(1) cent pos: " + j.getX() + " -- " + j.getY());
 				}
 				
 
