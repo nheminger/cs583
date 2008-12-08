@@ -95,6 +95,6 @@ public class Centroid {
 	}
 
 	public String toString(){
-		return this.CentroidId +"\t"+ x.toString() + ":" + y.toString() + "\t" + distanceMoved + "\t\t" + cluster.getPoints().size();
+		return this.CentroidId +"\t"+ x.toString() + ":" + y.toString() + "\t\t" + distanceMoved + "\t\t" + cluster.getPoints().size();
 	}	
 }
