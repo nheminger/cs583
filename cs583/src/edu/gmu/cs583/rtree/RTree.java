@@ -71,7 +71,7 @@ public class RTree {
 	// adapted from http://gis.umb.no/gis/applets/rtree2/jdk1.1/noumbgisrtree.jar
 	@SuppressWarnings({"unchecked","unused"})
 	public static void main(String[] args) {
-
+		System.currentTimeMillis();
 		int numberOfPoints = 5000;
 		int clusters = 6;
 		int maxEntries = numberOfPoints / clusters;
