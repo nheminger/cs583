@@ -46,7 +46,6 @@ public class PointGenerator {
 		else{
 			number_of_points = (x_range * y_range) - 1;
 		}
-		System.out.println("PointGEn: "+ number_of_points);
 		GeneratePoints();
 	}
 	
