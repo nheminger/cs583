@@ -8,7 +8,10 @@ import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.sql.Date;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Random;
 import java.util.Timer;
@@ -31,7 +34,8 @@ public class Kmeans {
 	private Integer number_of_centroids;
 	private Integer number_of_points;
 	private static Vector<Integer> pointSize = Geometry.makepointSize();
-
+	private static String DATE_FORMAT_NOW = "H:mm:ss:SSS";
+	
 	Kmeans(Integer numberOfCentroids,Integer numberOfDataPoints,Integer x,Integer y){
 		number_of_points = numberOfDataPoints;
 		if(numberOfCentroids > 12){
@@ -47,17 +51,21 @@ public class Kmeans {
 		Geometry.setDEBUG(false);
 		makecolors();
 		PointGenerator gen = new PointGenerator(x,y,numberOfDataPoints);
-		gen.GeneratePoints();
 		setDataPoints(gen.GetPointsVector());
+		System.out.println("constructor " + dataPoints.size());
 		createCentroids();
 	}
 	
 	public static void main(String[] args) {
+		Kmeans kmeans = null;
+//		Integer h = 15000;
+//		Calendar cal = Calendar.getInstance();
+//		cal.getTime();
 		for(int i = 2; i < 10; i++){  // testing range of centroids 2 - 10 
 			for(Integer h: pointSize){ // points size 10 - 100000 increasing by a factor of 10 each test
-				Kmeans kmeans = new Kmeans(i ,h ,h, h);
-				for(int k = 0; k < 100; k++ ){ // run test 100 times
-					System.out.println("running test...");
+				for(int k = 0; k < 20; k++ ){ // run test 100 times
+					System.out.println("number of data points: " + h);
+					kmeans = new Kmeans(i ,h ,h, h);
 					kmeans.runKmeans(kmeans);
 				}
 			}
@@ -73,7 +81,6 @@ public class Kmeans {
 			kmeans.recomputeCentroids();
 		}while(!kmeans.isDone());
 		long endtime = System.currentTimeMillis();
-		System.out.println(iterations +" ");
 		logStats(kmeans.getCentroids().size(), kmeans.getDataPoints().size(), (endtime - starttime), iterations); 
 	}
 	
@@ -107,7 +114,9 @@ public class Kmeans {
 	
 	public void initCentroids(){
 		int t = 0;
+		System.out.println(" init " + centroids.size() +"  " + dataPoints.size());
 		for(Centroid i: centroids){
+			System.out.println(dataPoints.get(t).getX()+ " ===== " +dataPoints.get(t).getY() + " t: " + t + " -> " + dataPoints.size() );
 			i.setPoints(dataPoints.get(t).getX(),dataPoints.get(t).getY());
 			i.setCentroidColor(colors.get(t));
 			t++;
@@ -196,14 +205,14 @@ public class Kmeans {
 	}
 
 	public String toString(){
-		Integer k = 0;
+//		Integer k = 0;
 		String str = new String();
-		str = "----- Data Points -----\nptId\tpos\t\tcentId\n";
-		for(DataPoint i : dataPoints){
-			//str = str + k + "\t" + i + "\n";
-			str = str + i + "\n";
-			k++;
-		}
+//		str = "----- Data Points -----\nptId\tpos\t\tcentId\n";
+//		for(DataPoint i : dataPoints){
+//			//str = str + k + "\t" + i + "\n";
+//			str = str + i + "\n";
+//			k++;
+//		}
 
 		str = str + "\n\n" + "----- Centroidr Points -----\ncentId\tpos\t\t\tdistMoved\tnumberOfPts\n";;
 		for(Centroid j: centroids){
