@@ -1,13 +1,14 @@
 package edu.gmu.cs583.util;
 
 import java.text.DecimalFormat;
+import java.util.Vector;
 
 import edu.gmu.cs583.data.Centroid;
 import edu.gmu.cs583.data.DataPoint;
 
 public class Geometry {
 	private static boolean DEBUG = false;
-
+	Vector<Integer> pointSize = new Vector<Integer>();
 	public Geometry() {
 	}
 
@@ -58,4 +59,19 @@ public class Geometry {
         Double dbl = new Double (d);
         return dbl.doubleValue ();
     }
+    
+	public void makepointSize(){
+		pointSize.add(10);
+		pointSize.add(50);
+//		pointSize.add(100);
+//		pointSize.add(500);
+//		pointSize.add(1000);
+//		pointSize.add(2000);
+//		pointSize.add(5000);
+//		pointSize.add(10000);
+//		pointSize.add(15000);
+//		pointSize.add(50000);
+//		pointSize.add(70000);
+//		pointSize.add(100000);
+	}
 }
