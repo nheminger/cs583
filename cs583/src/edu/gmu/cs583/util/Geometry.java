@@ -63,18 +63,18 @@ public class Geometry {
     }
     
 	public static Vector<Integer> makepointSize(){
-//		pointSize.add(10);
+		pointSize.add(15);
 		pointSize.add(50);
-//		pointSize.add(100);
-//		pointSize.add(500);
-//		pointSize.add(1000);
-//		pointSize.add(2000);
-//		pointSize.add(5000);
-//		pointSize.add(10000);
-//		pointSize.add(15000);
-//		pointSize.add(50000);
-//		pointSize.add(70000);
-//		pointSize.add(100000);
+		pointSize.add(100);
+		pointSize.add(500);
+		pointSize.add(1000);
+		pointSize.add(2000);
+		pointSize.add(5000);
+		pointSize.add(10000);
+		pointSize.add(15000);
+		pointSize.add(50000);
+		pointSize.add(70000);
+		pointSize.add(100000);
 		return pointSize;
 	}
 	
