@@ -8,8 +8,10 @@ import edu.gmu.cs583.data.DataPoint;
 
 public class Geometry {
 	private static boolean DEBUG = false;
-	Vector<Integer> pointSize = new Vector<Integer>();
+	private static Vector<Integer> pointSize = new Vector<Integer>();
+	
 	public Geometry() {
+	
 	}
 
 	public static void main(String[] args) {
@@ -60,8 +62,8 @@ public class Geometry {
         return dbl.doubleValue ();
     }
     
-	public void makepointSize(){
-		pointSize.add(10);
+	public static Vector<Integer> makepointSize(){
+//		pointSize.add(10);
 		pointSize.add(50);
 //		pointSize.add(100);
 //		pointSize.add(500);
@@ -73,5 +75,8 @@ public class Geometry {
 //		pointSize.add(50000);
 //		pointSize.add(70000);
 //		pointSize.add(100000);
+		return pointSize;
 	}
+	
+	
 }
