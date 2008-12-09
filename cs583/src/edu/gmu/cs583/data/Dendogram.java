@@ -66,7 +66,7 @@ public class Dendogram {
 				}
 				count++;
 			}
-			for (int dim = 0; dim <= centroid.getDimensions(); dim++) {
+			for (int dim = 0; dim <= centroid.getDimensions() - 1; dim++) {
 				double val = centroid.getCoords()[dim] / count;
 				centroid.getCoords()[dim] = val;
 			}
@@ -151,7 +151,7 @@ public class Dendogram {
 		for (Dendogram subCluster : subDendograms) {
 			points.addAll(subCluster.getPoints());
 		}
-		if (value.getCoords() == null)
+		if (value != null)
 			points.addElement(value);
 
 		return points;
