@@ -20,13 +20,16 @@ public class HierarchicalClustering {
 
 	public static void main(String[] args) throws Exception {
 
+		Integer x_range = new Integer(args[0]);
+		Integer y_range = new Integer(args[1]);
+		Integer numPoints = new Integer(args[2]);
+		
 		HierarchicalClustering clustering = new HierarchicalClustering(
-				LINK_TYPE.COMPLETE_LINK);
-		PointGenerator generator = new PointGenerator(15, 15, 121);
+				LINK_TYPE.SINGLE_LINK);
+		PointGenerator generator = new PointGenerator(x_range, y_range, numPoints);
 		generator.GeneratePoints();
 		Vector<DataPoint> points = generator.GetPointsVector();
-
-		System.out.print(clustering.calculateClusters(points));
+		clustering.calculateClusters(points);
 	}
 
 	private HierarchicalSimilarityMatrix similarityMatrix;
@@ -78,6 +81,23 @@ public class HierarchicalClustering {
 
 		while (clusters.size() > 1) {
 
+			System.out.println("\nNumber of clusters: " + clusters.size());
+			System.out.println("---------------------------------------------");
+			int i = 1;
+			for (Dendogram cluster : clusters) {
+				System.out.println("\tCentroid:\t"
+						+ cluster.getCentroid().getX() + " "
+						+ cluster.getCentroid().getY());
+				System.out.println("\tContained Points:\t");
+				for (DataPoint point : cluster.getPoints()) {
+					System.out.println("\t\t" + point.getX() + " "
+							+ point.getY() + " " + i);
+				}
+				i++;
+			}
+			System.out
+					.println("---------------------------------------------\n");
+
 			// calculate similarity between clusters
 			similarityMatrix = new HierarchicalSimilarityMatrix(clusters);
 			similarityMatrix.calculateSimilarity();
@@ -120,6 +140,23 @@ public class HierarchicalClustering {
 		}
 
 		while (clusters.size() > 1) {
+
+			System.out.println("\nNumber of clusters: " + clusters.size());
+			System.out.println("---------------------------------------------");
+			int i = 1;
+			for (Dendogram cluster : clusters) {
+				System.out.println("\tCentroid:\t"
+						+ cluster.getCentroid().getX() + " "
+						+ cluster.getCentroid().getY());
+				System.out.println("\tContained Points:\t");
+				for (DataPoint point : cluster.getPoints()) {
+					System.out.println("\t\t" + point.getX() + " "
+							+ point.getY() + " " + i);
+				}
+				i++;
+			}
+			System.out
+					.println("---------------------------------------------\n");
 
 			// calculate similarity between clusters
 			similarityMatrix = new HierarchicalSimilarityMatrix(clusters);
