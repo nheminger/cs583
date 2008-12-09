@@ -72,8 +72,8 @@ public class RTree {
 	@SuppressWarnings({"unchecked","unused"})
 	public static void main(String[] args) {
 		System.currentTimeMillis();
-		int numberOfPoints = 5000;
-		int clusters = 6;
+		int numberOfPoints = 1000;
+		int clusters = 2;
 		int maxEntries = numberOfPoints / clusters;
 		
 		System.out.println("Using a max entries of " + maxEntries);
