@@ -60,7 +60,7 @@ public class Kmeans {
 //		Integer h = 15000;
 //		Calendar cal = Calendar.getInstance();
 //		cal.getTime();
-		for(int i = 2; i < 10; i++){  // testing range of centroids 2 - 10 
+		for(int i = 3; i < 4; i++){  // testing range of centroids 2 - 10 
 			System.out.println("testing " + i + " centroids....");
 			for(Integer h: pointSize){ // points size 10 - 100000 increasing by a factor of 10 each test
 				for(int k = 0; k < 20; k++ ){ // run test 100 times
@@ -171,13 +171,11 @@ public class Kmeans {
 					newPos.setPoints(Geometry.truncate(x_mean/temp.size()), Geometry.truncate(y_mean/temp.size()));
 					j.setDistanceMoved(Geometry.getDistance(j, newPos));
 					j.setPoints(Geometry.truncate(x_mean/temp.size()), Geometry.truncate(y_mean/temp.size()));
-					//System.out.println("x total: " + x_mean + " y total: " + y_mean + "(n) cent pos: " + x_mean/temp.size()+ " -- " + y_mean/temp.size());
 				}
 				else if(temp.size() == 1){
 					newPos.setPoints(x_mean,y_mean);
 					j.setDistanceMoved(Geometry.getDistance(j, newPos));
 					j.setPoints(x_mean,y_mean);
-					//System.out.println("x total: " + x_mean + " y total: " + y_mean + "(1) cent pos: " + j.getX() + " -- " + j.getY());
 				}
 				
 
