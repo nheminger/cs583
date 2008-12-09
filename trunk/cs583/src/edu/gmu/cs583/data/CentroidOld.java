@@ -2,41 +2,35 @@ package edu.gmu.cs583.data;
 
 import java.awt.Color;
 
-public class Centroid extends Point {
+public class CentroidOld {
 	//Id is a number from 1 - 12
 	private Integer CentroidId;
-
+	private Double x;
+	private Double y;
 	private Color centroidColor;
 	private Cluster cluster = new Cluster();
 	private boolean hasMoved;
 	private Double distanceMoved = 0.0;
-	
-	public Centroid(){
+	public CentroidOld(){
 
 	}
 	
-	public Centroid(double[] coords){
-		super(coords);
+	public CentroidOld(Double x ,Double y){
 		CentroidId = 1;
 		this.centroidColor = Color.black;
 		this.cluster = new Cluster();
+		this.x = x;
+		this.y = y;
 	}
 	
-	public Centroid(Integer centroidId, Color centroidColor, Cluster cluster, double[] coords, int dimensions) {
-		super(coords);
-		this.CentroidId = centroidId;
+	public CentroidOld(Integer centroidId, Color centroidColor, Cluster cluster,
+			Double x, Double y) {
+		CentroidId = centroidId;
 		this.centroidColor = centroidColor;
 		this.cluster = cluster;
+		this.x = x;
+		this.y = y;
 	}
-	
-//	public Centroid(Integer centroidId, Color centroidColor, Cluster cluster,
-//			Double x, Double y) {
-//		CentroidId = centroidId;
-//		this.centroidColor = centroidColor;
-//		this.cluster = cluster;
-//		this.x = x;
-//		this.y = y;
-//	}
 
 	public Integer getCentroidId() {
 		return CentroidId;
@@ -44,6 +38,22 @@ public class Centroid extends Point {
 
 	public void setCentroidId(Integer centroidId) {
 		CentroidId = centroidId;
+	}
+
+	public Double getX() {
+		return x;
+	}
+
+	public void setX(Double x) {
+		this.x = x;
+	}
+
+	public Double getY() {
+		return y;
+	}
+
+	public void setY(Double y) {
+		this.y = y;
 	}
 
 	public Color getCentroidColor() {
@@ -62,6 +72,11 @@ public class Centroid extends Point {
 		this.cluster = cluster;
 	}
 	
+	public void setPoints(Double x, Double y){
+		this.x = x;
+		this.y = y;
+	}
+	
 	public boolean isHasMoved() {
 		return hasMoved;
 	}
@@ -78,17 +93,8 @@ public class Centroid extends Point {
 	public void setDistanceMoved(Double distanceMoved) {
 		this.distanceMoved = distanceMoved;
 	}
-	
+
 	public String toString(){
-		// OLD METHOD
-		//return this.CentroidId +"\t"+ x.toString() + ":" + y.toString() + "\t\t" + distanceMoved + "\t\t" + cluster.getPoints().size();
-		
-		StringBuffer sb = new StringBuffer();
-		for (int i = 0; i < coords.length; i++) {
-			sb.append(coords[i] + "\t");
-		}
-		sb.append("\t\t" + this.distanceMoved + "\t\t" + cluster.getPoints().size());
-		return sb.toString();
-	}
-	
+		return this.CentroidId +"\t"+ x.toString() + ":" + y.toString() + "\t\t" + distanceMoved + "\t\t" + cluster.getPoints().size();
+	}	
 }

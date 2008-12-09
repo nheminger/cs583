@@ -67,7 +67,10 @@ public class PointGenerator {
 		DataPoint point = null;
 		while(hashedPoints.size() < number_of_points){
 			point = new DataPoint();
-			point.setPoints(generator.nextInt(x_range),generator.nextInt(y_range));
+			double[] coords = new double[2];
+			coords[0] = generator.nextInt(x_range);
+			coords[1] = generator.nextInt(y_range);
+			point.setCoords(coords);
 			hashedPoints.put(point.toString(), point);			
 		}
 		return point;
@@ -78,6 +81,52 @@ public class PointGenerator {
 			returnDataPoints.add(hashedPoints.get(key));
 		}
 		return returnDataPoints;
+	}
+	
+	public static Vector<DataPoint> generateAndReturnPoints(int dimensions, int[] range, long numPoints, boolean randomize, boolean debug) throws Exception{
+
+		// temporary storage of points (to guarantee points are unique)
+		HashMap<String,DataPoint> pointsUniqueHash = new HashMap<String,DataPoint>();
+		
+		// used to return the points
+		Vector<DataPoint> points = new Vector<DataPoint>();
+
+		if (range.length < dimensions) {
+			throw new Exception("Error - specify a range for each dimension. Range.length '" + range.length +"' and dimension '" + dimensions + "'.");
+		}
+		
+//		x_range = x+1;
+//		y_range = y+1;
+//		if((x_range * y_range) > numberOfPoints){
+//			number_of_points = numberOfPoints;
+//		}
+//		else{
+//			number_of_points = (x_range * y_range) - 1;
+//		}
+
+		Random generator = null;
+		if (randomize) {
+			generator = new Random(System.currentTimeMillis());
+		} else {
+			generator = new Random();
+		}
+			
+		DataPoint point = null;
+		double[] coords = null;
+		while(pointsUniqueHash.size() < numPoints){
+			coords = new double[dimensions];
+			for (int i = 0; i < dimensions; i++) {
+				coords[i] = generator.nextInt(range[i]);
+			}
+			point = new DataPoint(coords);
+			pointsUniqueHash.put(point.toString(), point);			
+		}
+		
+		for(String key : pointsUniqueHash.keySet()){
+			points.add(pointsUniqueHash.get(key));
+		}
+		
+		return points;
 	}
 	
 	public HashMap<String, DataPoint> GetPointsHashed(){

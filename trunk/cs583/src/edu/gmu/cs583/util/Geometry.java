@@ -5,6 +5,7 @@ import java.util.Vector;
 
 import edu.gmu.cs583.data.Centroid;
 import edu.gmu.cs583.data.DataPoint;
+import edu.gmu.cs583.data.Point;
 
 public class Geometry {
 	private static boolean DEBUG = false;
@@ -16,34 +17,61 @@ public class Geometry {
 
 	public static void main(String[] args) {
 		Geometry geo = new Geometry();
-		Centroid cent = new Centroid(5.0, 20.0);
-		DataPoint point = new DataPoint(10.0, 30.0);
+		
+		double[] coords1 = new double[2];
+		coords1[0] = 5.0;
+		coords1[1] = 20.0;
+		double[] coords2 = new double[2];
+		coords2[0] = 5.0;
+		coords2[1] = 20.0;
+		
+		Centroid cent = new Centroid(coords1);
+		DataPoint point = new DataPoint(coords2);
+		
 		geo.setDEBUG(true);
+		
 		System.out.println(geo.getDistance(cent, point));
 	}
 
-	public static Double getDistance(Centroid centroid, DataPoint point) {
-		Double xVals = Math.pow((centroid.getX() - point.getX()), 2);
-		Double yVals = Math.pow((centroid.getY() - point.getY()), 2);
-		if (DEBUG)
-			System.out.println("Centroid: " + centroid.toString() + " point: "
-					+ point.toString() + " Distance: "
-					+ Math.sqrt(xVals + yVals));
-
-		return truncate(Math.sqrt(xVals + yVals));
+	public static Double getDistance(Point point1, Point point2) {
+		return Geometry.getDistance(point1, point2, false);
 	}
 	
 	/**
 	 * Returns the Euclidean distance of two data points.
-	 * @param x Data Point X
-	 * @param y Data Point Y
+	 * @param Point Point1 
+	 * @param Point Point2 
+	 * @param boolean truncate 
+	 * @throws RuntimeException when dimensions of points don't match
 	 * @return Euclidean distance between two dimension points.
 	 */
-	public static double getEuclideanDistance(DataPoint x, DataPoint y) {
-		double xVal = Math.pow((x.getX() - y.getX()), 2);
-		double yVal = Math.pow((x.getY() - y.getY()), 2);
-
-		return Math.sqrt((xVal + yVal));
+	public static Double getDistance(Point point1, Point point2, boolean truncate) {
+		
+		// make sure they are the same dimension
+		if (point1.getDimensions() != point2.getDimensions()) {
+			throw new RuntimeException("The dimensions of the points do not match when comparing distances! Point1: " + point1 + ", Point2: " + point2);
+		}
+		
+		int dimension = point1.getDimensions();
+		double[] coords1 = point1.getCoords();
+		double[] coords2 = point2.getCoords();
+		double sumOfSquares = 0;
+		
+		for (int i = 0; i < dimension; i++) {
+			sumOfSquares = sumOfSquares + Math.pow((coords1[i] - coords2[i]), 2);
+		}
+		double distance = Math.sqrt(sumOfSquares);
+		
+		if (DEBUG) {
+			System.out.println("point1: " + point1.toString() + " point2: "
+					+ point2.toString() + " Distance: "
+					+ distance);
+		}
+		
+		if (truncate)
+			return truncate(distance);
+		else
+			return distance;
 	}
 
 	public boolean isDEBUG() {
