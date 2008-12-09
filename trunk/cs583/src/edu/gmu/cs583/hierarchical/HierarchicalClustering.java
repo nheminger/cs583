@@ -23,10 +23,11 @@ public class HierarchicalClustering {
 		Integer x_range = new Integer(args[0]);
 		Integer y_range = new Integer(args[1]);
 		Integer numPoints = new Integer(args[2]);
-		
+
 		HierarchicalClustering clustering = new HierarchicalClustering(
 				LINK_TYPE.COMPLETE_LINK);
-		PointGenerator generator = new PointGenerator(x_range, y_range, numPoints);
+		PointGenerator generator = new PointGenerator(x_range, y_range,
+				3);
 		generator.GeneratePoints();
 		Vector<DataPoint> points = generator.GetPointsVector();
 		System.out.println(new java.util.Date());
@@ -88,15 +89,15 @@ public class HierarchicalClustering {
 			int i = 1;
 			for (Dendogram cluster : clusters) {
 				StringBuffer str = new StringBuffer("\tCentroid:\t");
-				for(int dim = 0; dim <= cluster.getCentroid().getDimensions() - 1; dim++) {
+				for (int dim = 0; dim <= cluster.getCentroid().getDimensions() - 1; dim++) {
 					str.append(cluster.getCentroid().getCoords()[dim] + " ");
 				}
 				System.out.println(str);
-				
+
 				str = new StringBuffer();
 				str.append("\tContained Points:\t");
 				for (DataPoint point : cluster.getPoints()) {
-					for(int dim = 0; dim <= point.getDimensions() - 1; dim++) {
+					for (int dim = 0; dim <= point.getDimensions() - 1; dim++) {
 						str.append(point.getCoords()[dim] + " ");
 					}
 					System.out.println(str);
@@ -154,18 +155,18 @@ public class HierarchicalClustering {
 			int i = 1;
 			for (Dendogram cluster : clusters) {
 				StringBuffer str = new StringBuffer("\tCentroid:\t");
-				for(int dim = 0; dim <= cluster.getCentroid().getDimensions() - 1; dim++) {
+				for (int dim = 0; dim <= cluster.getCentroid().getDimensions() - 1; dim++) {
 					str.append(cluster.getCentroid().getCoords()[dim] + " ");
 				}
 				System.out.println(str);
-				
+
 				str = new StringBuffer();
 				str.append("\tContained Points:\t");
 				for (DataPoint point : cluster.getPoints()) {
-					for(int dim = 0; dim <= point.getDimensions() - 1; dim++) {
+					for (int dim = 0; dim <= point.getDimensions() - 1; dim++) {
 						str.append(point.getCoords()[dim] + " ");
 					}
-					System.out.println(str);
+					System.out.println(str + "\n");
 				}
 				i++;
 			}
