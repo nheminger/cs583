@@ -25,11 +25,13 @@ public class HierarchicalClustering {
 		Integer numPoints = new Integer(args[2]);
 		
 		HierarchicalClustering clustering = new HierarchicalClustering(
-				LINK_TYPE.SINGLE_LINK);
+				LINK_TYPE.COMPLETE_LINK);
 		PointGenerator generator = new PointGenerator(x_range, y_range, numPoints);
 		generator.GeneratePoints();
 		Vector<DataPoint> points = generator.GetPointsVector();
+		System.out.println(new java.util.Date());
 		clustering.calculateClusters(points);
+		System.out.println(new java.util.Date());
 	}
 
 	private HierarchicalSimilarityMatrix similarityMatrix;
@@ -85,13 +87,19 @@ public class HierarchicalClustering {
 			System.out.println("---------------------------------------------");
 			int i = 1;
 			for (Dendogram cluster : clusters) {
-				System.out.println("\tCentroid:\t"
-						+ cluster.getCentroid().getX() + " "
-						+ cluster.getCentroid().getY());
-				System.out.println("\tContained Points:\t");
+				StringBuffer str = new StringBuffer("\tCentroid:\t");
+				for(int dim = 0; dim <= cluster.getCentroid().getDimensions() - 1; dim++) {
+					str.append(cluster.getCentroid().getCoords()[dim] + " ");
+				}
+				System.out.println(str);
+				
+				str = new StringBuffer();
+				str.append("\tContained Points:\t");
 				for (DataPoint point : cluster.getPoints()) {
-					System.out.println("\t\t" + point.getX() + " "
-							+ point.getY() + " " + i);
+					for(int dim = 0; dim <= point.getDimensions() - 1; dim++) {
+						str.append(point.getCoords()[dim] + " ");
+					}
+					System.out.println(str);
 				}
 				i++;
 			}
@@ -145,13 +153,19 @@ public class HierarchicalClustering {
 			System.out.println("---------------------------------------------");
 			int i = 1;
 			for (Dendogram cluster : clusters) {
-				System.out.println("\tCentroid:\t"
-						+ cluster.getCentroid().getX() + " "
-						+ cluster.getCentroid().getY());
-				System.out.println("\tContained Points:\t");
+				StringBuffer str = new StringBuffer("\tCentroid:\t");
+				for(int dim = 0; dim <= cluster.getCentroid().getDimensions() - 1; dim++) {
+					str.append(cluster.getCentroid().getCoords()[dim] + " ");
+				}
+				System.out.println(str);
+				
+				str = new StringBuffer();
+				str.append("\tContained Points:\t");
 				for (DataPoint point : cluster.getPoints()) {
-					System.out.println("\t\t" + point.getX() + " "
-							+ point.getY() + " " + i);
+					for(int dim = 0; dim <= point.getDimensions() - 1; dim++) {
+						str.append(point.getCoords()[dim] + " ");
+					}
+					System.out.println(str);
 				}
 				i++;
 			}

@@ -71,8 +71,8 @@ public class HierarchicalSimilarityMatrix {
 					Similarity similarity = new Similarity();
 					similarity.setPoint_J(cluster_J);
 					similarity.setPoint_K(cluster_K);
-					similarity.setSimilarity(Geometry.getEuclideanDistance(
-							cluster_J.getCentroid(), cluster_K.getCentroid()));
+					similarity.setSimilarity(Geometry.getDistance(cluster_J
+							.getCentroid(), cluster_K.getCentroid(), false));
 					similarityList.addElement(similarity);
 				}
 			}
@@ -99,19 +99,19 @@ public class HierarchicalSimilarityMatrix {
 				// update similarity rows
 				sim.setPoint_J(updated);
 				sim.setPoint_K(dendogram);
-				sim.setSimilarity(Geometry.getEuclideanDistance(updated
-						.getCentroid(), dendogram.getCentroid()));
+				sim.setSimilarity(Geometry.getDistance(updated.getCentroid(),
+						dendogram.getCentroid()));
 				_similarityList.addElement(sim);
 
 				// update similarity cols
 				sim = new Similarity();
 				sim.setPoint_J(dendogram);
 				sim.setPoint_K(updated);
-				sim.setSimilarity(Geometry.getEuclideanDistance(dendogram
-						.getCentroid(), updated.getCentroid()));
+				sim.setSimilarity(Geometry.getDistance(dendogram.getCentroid(),
+						updated.getCentroid()));
 				_similarityList.addElement(sim);
 			}
-			
+
 			// remove old similarity rows
 			Similarity sim = new Similarity();
 			sim.setPoint_J(oldCluster_x);
@@ -135,18 +135,18 @@ public class HierarchicalSimilarityMatrix {
 			sim.setPoint_J(dendogram);
 			sim.setPoint_K(oldCluster_y);
 			_similarityList.remove(sim);
-			
+
 			i++;
 		}
 
 		_clusters.addElement(updated);
-		
-		if(clusters.size() <= _clusters.size())
+
+		if (clusters.size() <= _clusters.size())
 			System.err.println("Cluster size is increasing!");
-		
-		if(similarityList.size() <= _similarityList.size())
+
+		if (similarityList.size() <= _similarityList.size())
 			System.err.println("Similarity matrix is increasing!");
-		
+
 		clusters = _clusters;
 		similarityList = _similarityList;
 	}

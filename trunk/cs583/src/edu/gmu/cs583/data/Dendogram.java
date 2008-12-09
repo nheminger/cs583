@@ -55,18 +55,21 @@ public class Dendogram {
 
 		if (subDendograms.size() > 1) {
 			centroid = new DataPoint();
-			centroid.setX(new Double(0));
-			centroid.setY(new Double(0));
 			int count = 0;
 			for (Dendogram dendogram : subDendograms) {
-				centroid.setX(centroid.getX()
-						+ dendogram.recalculateCentroid().getX());
-				centroid.setY(centroid.getY()
-						+ dendogram.recalculateCentroid().getY());
+				centroid = new DataPoint(dendogram.getCentroid().getCoords());
+
+				for (int dim = 0; dim <= centroid.getDimensions() - 1; dim++) {
+					double val = centroid.getCoords()[dim]
+							+ dendogram.getCentroid().getCoords()[dim];
+					centroid.getCoords()[dim] = val;
+				}
 				count++;
 			}
-			centroid.setX(centroid.getX() / count);
-			centroid.setY(centroid.getY() / count);
+			for (int dim = 0; dim <= centroid.getDimensions(); dim++) {
+				double val = centroid.getCoords()[dim] / count;
+				centroid.getCoords()[dim] = val;
+			}
 		}
 
 		return centroid;
@@ -114,30 +117,62 @@ public class Dendogram {
 	 * String representation of the Dendogram.
 	 */
 	public String toString() {
-		String str = "{";
-		if (subDendograms.isEmpty())
-			str += "(" + value.getX() + ", " + value.getY() + ")";
-		else {
+		StringBuffer str = new StringBuffer("{");
+		if (subDendograms.isEmpty()) {
+			str.append("(");
+			for (int dim = 0; dim <= value.getDimensions() - 1; dim++) {
+				if (dim != value.getDimensions())
+					str.append(value.getCoords()[dim] + ", ");
+				else
+					str.append(value.getCoords()[dim]);
+			}
+			str.append(")");
+		} else {
 			for (int i = 0; i <= subDendograms.size() - 1; i++) {
 				if (i == subDendograms.size() - 1)
-					str += subDendograms.get(i).toString();
+					str.append(subDendograms.get(i).toString());
 				else
-					str += subDendograms.get(i).toString() + ", ";
+					str.append(subDendograms.get(i).toString() + ", ");
 			}
 		}
 
-		str += "}";
-		return str;
+		str.append("}");
+		return str.toString();
 	}
-	
-	public boolean equals(Dendogram anotherDendogram) {
-		boolean equal = false;
-		
-		if(this.getCentroid().getX().equals(anotherDendogram.getCentroid().getX())
-				&& this.getCentroid().getY().equals(anotherDendogram.getCentroid().getY())) {
-			equal = true;
+
+	/**
+	 * Gets a list of points contained in the Dendogram.
+	 * 
+	 * @return a list of points contained in the Dendogram.
+	 */
+	public Vector<DataPoint> getPoints() {
+		Vector<DataPoint> points = new Vector<DataPoint>();
+
+		for (Dendogram subCluster : subDendograms) {
+			points.addAll(subCluster.getPoints());
 		}
-		
+		if (value.getCoords() == null)
+			points.addElement(value);
+
+		return points;
+	}
+
+	/**
+	 * Compares two dendogram objects.
+	 */
+	public boolean equals(Object anotherObj) {
+		boolean equal = true;
+		Dendogram anotherDendogram = (Dendogram) anotherObj;
+		anotherDendogram.recalculateCentroid();
+		this.recalculateCentroid();
+
+		for (int dim = 0; dim <= this.getCentroid().getDimensions() - 1; dim++) {
+			double thisVal = this.getCentroid().getCoords()[dim];
+			double otherVal = anotherDendogram.getCentroid().getCoords()[dim];
+			if (thisVal != otherVal)
+				equal = false;
+		}
+
 		return equal;
 	}
 }
