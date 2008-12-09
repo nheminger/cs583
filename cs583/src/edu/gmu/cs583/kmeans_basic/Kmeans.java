@@ -52,7 +52,6 @@ public class Kmeans {
 		makecolors();
 		PointGenerator gen = new PointGenerator(x,y,numberOfDataPoints);
 		setDataPoints(gen.GetPointsVector());
-		System.out.println("constructor " + dataPoints.size());
 		createCentroids();
 	}
 	
@@ -62,9 +61,9 @@ public class Kmeans {
 //		Calendar cal = Calendar.getInstance();
 //		cal.getTime();
 		for(int i = 2; i < 10; i++){  // testing range of centroids 2 - 10 
+			System.out.println("testing " + i + " centroids....");
 			for(Integer h: pointSize){ // points size 10 - 100000 increasing by a factor of 10 each test
 				for(int k = 0; k < 20; k++ ){ // run test 100 times
-					System.out.println("number of data points: " + h);
 					kmeans = new Kmeans(i ,h ,h, h);
 					kmeans.runKmeans(kmeans);
 				}
@@ -114,9 +113,7 @@ public class Kmeans {
 	
 	public void initCentroids(){
 		int t = 0;
-		System.out.println(" init " + centroids.size() +"  " + dataPoints.size());
 		for(Centroid i: centroids){
-			System.out.println(dataPoints.get(t).getX()+ " ===== " +dataPoints.get(t).getY() + " t: " + t + " -> " + dataPoints.size() );
 			i.setPoints(dataPoints.get(t).getX(),dataPoints.get(t).getY());
 			i.setCentroidColor(colors.get(t));
 			t++;
