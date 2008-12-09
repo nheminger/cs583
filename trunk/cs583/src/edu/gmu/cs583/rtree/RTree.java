@@ -72,8 +72,8 @@ public class RTree {
 	@SuppressWarnings({"unchecked","unused"})
 	public static void main(String[] args) {
 		System.currentTimeMillis();
-		int numberOfPoints = 1000;
-		int clusters = 2;
+		int numberOfPoints = 3000;
+		int clusters = 6;
 		int maxEntries = numberOfPoints / clusters;
 		
 		System.out.println("Using a max entries of " + maxEntries);
@@ -81,14 +81,29 @@ public class RTree {
 		RTree rtree = new RTree(maxEntries);
 		System.out.println("Entering RTree");
 		
-
-		PointGenerator gen = new PointGenerator(numberOfPoints);
-		gen.GeneratePoints();
-		Vector<DataPoint> points = gen.GetPointsVector();
-		for (int i = 0; i < points.size(); i++) {
-			DataPoint dp = points.get(i);
-			rtree.insert(new RTreeLeafEntry(null, new BoundingBox(dp.getX(), dp.getY(), dp.getX(), dp.getY())));
+		Vector<DataPoint> randomGeneratedPoints = null;
+		try {
+			int[] range = new int[2];
+			range[0] = 600;
+			range[1] = 600;
+			randomGeneratedPoints = PointGenerator.generateAndReturnPoints(2, range, numberOfPoints, true, true);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			System.exit(0);
 		}
+		for (int i = 0; i < randomGeneratedPoints.size(); i++) {
+			DataPoint dp = randomGeneratedPoints.get(i);
+			rtree.insert(new RTreeLeafEntry(null, new BoundingBox(dp.getCoords()[0], dp.getCoords()[1], dp.getCoords()[0], dp.getCoords()[1])));
+		}
+
+//		PointGenerator gen = new PointGenerator(numberOfPoints);
+//		gen.GeneratePoints();
+//		Vector<DataPoint> points = gen.GetPointsVector();
+//		for (int i = 0; i < points.size(); i++) {
+//			DataPoint dp = points.get(i);
+//			rtree.insert(new RTreeLeafEntry(null, new BoundingBox(dp.getX(), dp.getY(), dp.getX(), dp.getY())));
+//		}
 		
 		
 //		rtree.insert(new RTreeLeafEntry(null, new BoundingBox(10.0, 10.0, 20.0,20.0)));
