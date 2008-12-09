@@ -50,8 +50,25 @@ public class Kmeans {
 		distanceTable = new Double[number_of_points][number_of_centroids];
 		Geometry.setDEBUG(false);
 		makecolors();
-		PointGenerator gen = new PointGenerator(x,y,numberOfDataPoints);
-		setDataPoints(gen.GetPointsVector());
+		
+		//PointGenerator gen = new PointGenerator(x,y,numberOfDataPoints);
+		//setDataPoints(gen.GetPointsVector());
+		
+		int range[] = new int[2];
+		range[0] = x;
+		range[1] = y;
+		
+		Vector<DataPoint> randomGeneratedPoints = null;;
+		try {
+			randomGeneratedPoints = PointGenerator.generateAndReturnPoints(2, range, numberOfDataPoints, true, true);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			System.exit(0);
+		}
+		setDataPoints(randomGeneratedPoints);
+		
+		System.out.println("constructor " + dataPoints.size());
 		createCentroids();
 	}
 	
@@ -60,10 +77,11 @@ public class Kmeans {
 //		Integer h = 15000;
 //		Calendar cal = Calendar.getInstance();
 //		cal.getTime();
-		for(int i = 3; i < 4; i++){  // testing range of centroids 2 - 10 
+		for(int i = 2; i < 10; i++){  // testing range of centroids 2 - 10 
 			System.out.println("testing " + i + " centroids....");
 			for(Integer h: pointSize){ // points size 10 - 100000 increasing by a factor of 10 each test
 				for(int k = 0; k < 20; k++ ){ // run test 100 times
+					System.out.println("number of data points: " + h);
 					kmeans = new Kmeans(i ,h ,h, h);
 					kmeans.runKmeans(kmeans);
 				}
@@ -113,8 +131,13 @@ public class Kmeans {
 	
 	public void initCentroids(){
 		int t = 0;
+		System.out.println(" init " + centroids.size() +"  " + dataPoints.size());
 		for(Centroid i: centroids){
-			i.setPoints(dataPoints.get(t).getX(),dataPoints.get(t).getY());
+			//System.out.println(dataPoints.get(t).getX()+ " ===== " +dataPoints.get(t).getY() + " t: " + t + " -> " + dataPoints.size() );
+	
+			// 2-D to N-D conversion
+			//i.setPoints(dataPoints.get(t).getX(),dataPoints.get(t).getY());
+			i.setCoords(dataPoints.get(t).getCoords());
 			i.setCentroidColor(colors.get(t));
 			t++;
 		}
@@ -157,25 +180,52 @@ public class Kmeans {
 		if(DEBUG)
 			System.out.println("recompute centroids");
 			for(Centroid j: centroids){
+				
 				Double x_mean = 0.0, y_mean = 0.0;
+				
+				
 				DataPoint newPos = new DataPoint();
 				Vector<DataPoint> temp = new Vector<DataPoint>();
 				temp = j.getCluster().getPoints();
+				
+				double[] means = new double[temp.get(0).getDimensions()];
+				
 				for(int i = 0; i < temp.size(); i++){
 					DataPoint pt = new DataPoint();
 					pt = temp.get(i);
-					x_mean += pt.getX();
-					y_mean += pt.getY();
+					
+					// CONVERSION FROM 2-D to N-D
+					double[] currentCoords = pt.getCoords();
+					for (int k = 0; k < means.length; k++) {
+						means[k] += currentCoords[k];
+					}
+					//x_mean += pt.getX();
+					//y_mean += pt.getY();
+					
 				}
+				
 				if(temp.size() > 1){
-					newPos.setPoints(Geometry.truncate(x_mean/temp.size()), Geometry.truncate(y_mean/temp.size()));
+					
+					// calculate mean coordinates of all the points (since there is more than 1)
+					for (int k = 0; k < means.length; k++) {
+						means[k] = Geometry.truncate(means[k] / temp.size());
+					}
+					
+					// set the new position of where the centroid will be
+					newPos.setCoords(means);
+					
+					// calculate and set the distance the centroid moved (used for statistics and/or termination)
 					j.setDistanceMoved(Geometry.getDistance(j, newPos));
-					j.setPoints(Geometry.truncate(x_mean/temp.size()), Geometry.truncate(y_mean/temp.size()));
-				}
-				else if(temp.size() == 1){
-					newPos.setPoints(x_mean,y_mean);
+					
+					// update the location of the centroid to the new mean location
+					j.setCoords(means);
+					
+					//System.out.println("x total: " + x_mean + " y total: " + y_mean + "(n) cent pos: " + x_mean/temp.size()+ " -- " + y_mean/temp.size());
+				} else if(temp.size() == 1){
+					newPos.setCoords(means);
 					j.setDistanceMoved(Geometry.getDistance(j, newPos));
-					j.setPoints(x_mean,y_mean);
+					j.setCoords(means);
+					//System.out.println("x total: " + x_mean + " y total: " + y_mean + "(1) cent pos: " + j.getX() + " -- " + j.getY());
 				}
 				
 
