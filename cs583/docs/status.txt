@@ -2,38 +2,46 @@
 	1.1 Kmeans
 		implementation			<-- done
 		testing					<-- done
-		output ploting data		<-- in-progress
-		optimazation dist table <-- in-progress
+		output ploting data 2d	<-- in-progress
+		output ploting data 3d	<-- in-progress
 	1.2 hierarchical
 		implementation			<-- done
 		testing					<-- in-progress
-		output ploting data		<-- in-progress
-		optimazation 			<-- in-progress
+		output ploting data 2d	<-- in-progress
+		output ploting data 3d	<-- in-progress
 	1.3 r-tree
-		implementation			<-- in-progress
+		implementation			<-- done
 		testing					<-- in-progress
-		output ploting data		<-- in-progress
-		optimazation 			<-- in-progress
+		output ploting data 2d	<-- in-progress
+		output ploting data 3d	<-- in-progress
+	1.4 N dimensional implementation
+		upgrade classes			<-- in-progress
+	1.5 gnuplot
+		file generator			<-- in-progress		
 		
 2.0 data analysis
 	2.1 kmeans O(n*k)
-		testing					<-- in-progress
+		testing data			<-- in-progress
 		space complexity		<-- in-progress
 		time complexity			<-- in-progress
 		pros					<-- in-progress
 		cons					<-- in-progress
 	2.2 hierarchical O(n^2)
-		testing					<-- in-progress
+		testing data			<-- in-progress
 		space complexity		<-- in-progress
 		time complexity			<-- in-progress
 		pros					<-- in-progress
 		cons					<-- in-progress
 	2.3 r-tree O(?)
-		testing					<-- in-progress
+		testing data			<-- in-progress
 		space complexity		<-- in-progress
 		time complexity			<-- in-progress
 		pros					<-- in-progress
 		cons					<-- in-progress
+	2.4 generate gnu data files
+		2d (all algorithms) 	<-- in-progress
+		3d (all algorithms) 	<-- in-progress
+		data types (all)		<-- in-progress
 
 3.0 Paper
 	3.1 draft(s)
