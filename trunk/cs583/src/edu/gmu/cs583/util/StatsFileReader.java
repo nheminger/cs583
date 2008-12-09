@@ -73,27 +73,32 @@ public class StatsFileReader {
 		    		System.out.println("Min Time (ms):\t\t"+j.getTimeMin() );
 		    		System.out.println("Average Iterations:\t"+j.getAvgIter() );
 		    		System.out.println("Max Iterations:\t\t"+j.getIterMax() );
-		    		System.out.println("Min Iterations:\t\t"+j.getIterMin() );
-		    		
+		    		System.out.println("Min Iterations:\t\t"+j.getIterMin() );	
 		    	}
-		    	
-		    	
 		    }
-		    
+
 		    }catch (Exception e){
 		       e.printStackTrace();
 		    }
+		    csvFile();
 
 	}
 	
-	public void logStats(){
-		   
+	public void csvFile(){
 		try{
-			     File f=new File("c:\\formatedStats2D.txt");
+			     File f=new File("c:\\formatedStats2D.csv");
 			      if(f.exists()){
-			      String str= "\n";
+			      String str= "";
 			          BufferedWriter out = new BufferedWriter(new FileWriter(f, true));
-			          out.write(str);
+					    for(CentroidStats i : CentValues){
+					    	System.out.println("cent");
+					    	for(PointSize j : i.timeValues){
+						    	System.out.println("pointsize");
+					    		// cents,number of points,number of tests,average time, average iterations
+					    		str = i.getId()+"," + j.getId() +"," +j.getAvgTime()+","+j.getAvgIter()+"\n";
+						        out.write(str);
+					    	}
+					    }
 			          out.close();
 			          }
 			          else
@@ -285,5 +290,7 @@ public class StatsFileReader {
 		
 	
 	}
+	
+	
 	
 }
