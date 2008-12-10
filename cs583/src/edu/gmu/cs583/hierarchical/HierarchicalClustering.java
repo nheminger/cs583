@@ -23,8 +23,8 @@ public class HierarchicalClustering {
 		HierarchicalClustering clustering = new HierarchicalClustering(
 				LINK_TYPE.COMPLETE_LINK);
 		
-		Vector<DataPoint> points = PointGenerator.generateAndReturnPoints(2,
-				new int[] { 10, 10}, 3, true, false);
+		Vector<DataPoint> points = PointGenerator.generateAndReturnPoints(3,
+				new int[] { 300, 300, 300}, 3, true, false);
 		
 		System.out.println(new java.util.Date());
 		clustering.calculateClusters(points);
@@ -75,29 +75,32 @@ public class HierarchicalClustering {
 		// Put each data point into its own cluster
 		for (DataPoint point : data) {
 			Dendogram dendogram = new Dendogram(point);
+			dendogram.setDimensions(point.getDimensions());
 			clusters.addElement(dendogram);
 		}
 
 		while (clusters.size() > 1) {
 
-			System.out.println("\nNumber of clusters: " + clusters.size());
+			System.out.println("\nNumber of clusters:\t" + clusters.size());
 			System.out.println("---------------------------------------------");
 			int i = 1;
 			for (Dendogram cluster : clusters) {
-				StringBuffer str = new StringBuffer("\tCentroid:\t");
+				StringBuffer str = new StringBuffer("Centroid:\t");
 				for (int dim = 0; dim <= cluster.getCentroid().getDimensions() - 1; dim++) {
 					str.append(cluster.getCentroid().getCoords()[dim] + " ");
 				}
 				System.out.println(str);
 
 				str = new StringBuffer();
-				str.append("\tContained Points:\t");
+				str.append("Contained Points:\n\t");
 				for (DataPoint point : cluster.getPoints()) {
 					for (int dim = 0; dim <= point.getDimensions() - 1; dim++) {
-						str.append(point.getCoords()[dim] + " ");
+						str.append(" " + point.getCoords()[dim]);
+						if(dim == point.getDimensions() - 1)
+							str.append(" " + i + "\n\t");
 					}
-					System.out.println(str);
 				}
+				System.out.println(str);
 				i++;
 			}
 			System.out
@@ -122,6 +125,7 @@ public class HierarchicalClustering {
 				Dendogram dendogram = new Dendogram();
 				dendogram.addSubDendogram(cluster_J);
 				dendogram.addSubDendogram(cluster_K);
+				dendogram.setDimensions(cluster_J.getDimensions());
 				dendogram.recalculateCentroid();
 				similarityMatrix.getSimilarityList().remove(0);
 				clusters.remove(cluster_J);
@@ -141,6 +145,7 @@ public class HierarchicalClustering {
 		// Put each data point into its own cluster
 		for (DataPoint point : data) {
 			Dendogram dendogram = new Dendogram(point);
+			dendogram.setDimensions(point.getDimensions());
 			clusters.addElement(dendogram);
 		}
 
@@ -190,6 +195,7 @@ public class HierarchicalClustering {
 				Dendogram dendogram = new Dendogram();
 				dendogram.addSubDendogram(cluster_J);
 				dendogram.addSubDendogram(cluster_K);
+				dendogram.setDimensions(cluster_J.getDimensions());
 				dendogram.recalculateCentroid();
 				similarityMatrix.getSimilarityList().remove(0);
 				clusters.remove(cluster_J);
