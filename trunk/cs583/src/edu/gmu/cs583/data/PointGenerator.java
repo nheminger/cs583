@@ -8,6 +8,13 @@
 
 package edu.gmu.cs583.data;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileReader;
+import java.io.IOException;
+import java.nio.ByteBuffer;
+import java.nio.channels.FileChannel;
 import java.util.HashMap;
 import java.util.Random;
 import java.util.Vector;
@@ -121,6 +128,43 @@ public class PointGenerator {
 			point = new DataPoint(coords);
 			pointsUniqueHash.put(point.toString(), point);			
 		}
+		
+		for(String key : pointsUniqueHash.keySet()){
+			points.add(pointsUniqueHash.get(key));
+		}
+		
+		return points;
+	}
+	
+	public static Vector<DataPoint> generatePointsInShapeAndReturn(String filename) throws Exception{
+		// temporary storage of points (to guarantee points are unique)
+		HashMap<String,DataPoint> pointsUniqueHash = new HashMap<String,DataPoint>();
+		
+		// used to return the points
+		Vector<DataPoint> points = new Vector<DataPoint>();
+		
+	 	File aFile = new File(filename);
+	    try {
+		        BufferedReader input =  new BufferedReader(new FileReader(aFile));
+		        try {
+				          String line = null;
+			      		  DataPoint point = null;
+			    		  double[] coords = null;
+				          while (( line = input.readLine()) != null) {
+								String[] parts = line.split("\\s");
+								coords = new double[parts.length];
+								for (int i = 0; i < parts.length; i++) {
+									 coords[i] = Integer.parseInt(parts[i]);
+								}
+								point = new DataPoint(coords);
+								pointsUniqueHash.put(point.toString(), point);			
+				          }
+		        } finally {
+		          input.close();
+		        }
+	      } catch (IOException ex){
+	    	  ex.printStackTrace();
+	      }
 		
 		for(String key : pointsUniqueHash.keySet()){
 			points.add(pointsUniqueHash.get(key));
