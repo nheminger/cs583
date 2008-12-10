@@ -14,6 +14,10 @@ import java.util.regex.Pattern;
 
 public class StatsFileReader {
 	public Vector<CentroidStats> CentValues = new Vector<CentroidStats>();
+	public CentroidStats allCents = new CentroidStats();
+	StatsFileReader(){
+		allCents.setId(-1);
+	}
 	
 	public static void main(String[] args){
 		StatsFileReader stat = new StatsFileReader();
@@ -40,12 +44,14 @@ public class StatsFileReader {
 		        	   CentroidStats record = new CentroidStats();
 		        	   record.setId(centvalue);
 		        	   record.addTestResults(ptvalue, timevalue, itervalue);
+		        	   allCents.addTestResults(ptvalue, timevalue, itervalue);
 		        	   CentValues.add(record);
 		           }
 		           else {
 		        	   boolean found = false;
 		        	   for(CentroidStats i : CentValues){
 		        		   if(i.getId() == centvalue){
+		        			   allCents.addTestResults(ptvalue, timevalue, itervalue);
 		        			   i.addTestResults(ptvalue, timevalue, itervalue);
 		        			   found = true;
 		        		   }
@@ -54,13 +60,13 @@ public class StatsFileReader {
 		        		   CentroidStats record = new CentroidStats();
 			        	   record.setId(centvalue);
 			        	   record.addTestResults(ptvalue, timevalue, itervalue);
+			        	   allCents.addTestResults(ptvalue, timevalue, itervalue);
 			        	   CentValues.add(record);
-		        	   }
-		        	   
+		        	   } 
 		           }
-		           
 		    	}
 		    }
+		    CentValues.add(allCents);
 		    in.close();
 		    System.out.println("Number of Centroid Sizes:\t" + CentValues.size());
 		    for(CentroidStats i : CentValues){
@@ -80,7 +86,8 @@ public class StatsFileReader {
 		    }catch (Exception e){
 		       e.printStackTrace();
 		    }
-		    csvFile();
+		   csvFile();
+		   // csvAvgOverAll();
 
 	}
 	
@@ -91,11 +98,9 @@ public class StatsFileReader {
 			      String str= "";
 			          BufferedWriter out = new BufferedWriter(new FileWriter(f, true));
 					    for(CentroidStats i : CentValues){
-					    	System.out.println("cent");
 					    	for(PointSize j : i.timeValues){
-						    	System.out.println("pointsize");
-					    		// cents,number of points,number of tests,average time, average iterations
-					    		str = i.getId()+"," + j.getId() +"," +j.getAvgTime()+","+j.getAvgIter()+"\n";
+					    		// Centroid,PointSize,AverageRunTime,AverageIterations,MaxTime,MinTime,MaxIter,MinIter
+					    		str = i.getId()+"," + j.getId() +"," +j.getAvgTime()+","+j.getAvgIter()+","+j.getTimeMax() +","+j.getTimeMin()+ ","+j.getIterMax()+","+j.getIterMin()+"\n";
 						        out.write(str);
 					    	}
 					    }
@@ -107,6 +112,31 @@ public class StatsFileReader {
 			System.out.println("LOG STATS ERROR: writing to file failed");
 		}
 			    
+	}
+	
+	public void  csvAvgOverAll(){
+		try{
+		     File f=new File("c:\\formatedStats2D.csv");
+		      if(f.exists()){
+		      String str= "";
+		          BufferedWriter out = new BufferedWriter(new FileWriter(f, true));
+				    for(CentroidStats i : CentValues){
+				    	System.out.println("cent");
+				    	for(PointSize j : i.timeValues){
+					    	System.out.println("pointsize");
+				    		// Centroid,PointSize,AverageRunTime,AverageIterations,MaxTime,MinTime,MaxIter,MinIter
+				    		str = i.getId()+"," + j.getId() +"," +j.getAvgTime()+","+j.getAvgIter()+","+j.getTimeMax() +","+j.getTimeMin()+ ","+j.getIterMax()+","+j.getIterMin()+"\n";
+					        out.write(str);
+				    	}
+				    }
+		          out.close();
+		          }
+		          else
+		            System.out.println("This file is not exist");
+	}catch (Exception e){
+		System.out.println("LOG STATS ERROR: writing to file failed");
+	}
+		
 	}
 	
 	public Vector<CentroidStats> getCentValues() {
