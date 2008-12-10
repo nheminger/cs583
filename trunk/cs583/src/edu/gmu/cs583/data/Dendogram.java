@@ -16,6 +16,7 @@ public class Dendogram {
 	private Vector<Dendogram> subDendograms;
 	private DataPoint value;
 	private DataPoint centroid;
+	private int dimensions;
 
 	/**
 	 * Default Constructor
@@ -56,10 +57,10 @@ public class Dendogram {
 	public DataPoint recalculateCentroid() {
 
 		if (subDendograms.size() > 1) {
-			centroid = new DataPoint(new double[centroid.getDimensions()]);
+			centroid = new DataPoint(new double[dimensions]);
 			int count = 0;
 			for (Dendogram dendogram : subDendograms) {
-				
+
 				for (int dim = 0; dim <= centroid.getDimensions() - 1; dim++) {
 					double val = centroid.getCoords()[dim]
 							+ dendogram.getCentroid().getCoords()[dim];
@@ -74,6 +75,21 @@ public class Dendogram {
 		}
 
 		return centroid;
+	}
+
+	/**
+	 * @return the dimensions
+	 */
+	public int getDimensions() {
+		return dimensions;
+	}
+
+	/**
+	 * @param dimensions
+	 *            the dimensions to set
+	 */
+	public void setDimensions(int dimensions) {
+		this.dimensions = dimensions;
 	}
 
 	/**
