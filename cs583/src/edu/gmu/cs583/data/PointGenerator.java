@@ -151,9 +151,10 @@ public class PointGenerator {
 			      		  DataPoint point = null;
 			    		  double[] coords = null;
 				          while (( line = input.readLine()) != null) {
-								String[] parts = line.split("\\s");
+								String[] parts = line.split("[\\s]+");
 								coords = new double[dimensions];
 								for (int i = 0; i < dimensions; i++) {
+									 System.out.println("part: " + parts[i]);
 									 coords[i] = Double.parseDouble(parts[i]);
 								}
 								point = new DataPoint(coords);
