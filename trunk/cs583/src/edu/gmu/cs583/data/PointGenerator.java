@@ -136,7 +136,7 @@ public class PointGenerator {
 		return points;
 	}
 	
-	public static Vector<DataPoint> generatePointsInShapeAndReturn(String filename, int dimensions) throws Exception{
+	public static Vector<DataPoint> readPointsFromFile(String filename, int dimensions) throws Exception{
 		// temporary storage of points (to guarantee points are unique)
 		HashMap<String,DataPoint> pointsUniqueHash = new HashMap<String,DataPoint>();
 		
