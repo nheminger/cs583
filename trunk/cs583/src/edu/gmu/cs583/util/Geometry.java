@@ -99,10 +99,10 @@ public class Geometry {
 		pointSize.add(2000);
 		pointSize.add(5000);
 		pointSize.add(10000);
-		pointSize.add(15000);
-		pointSize.add(50000);
-		pointSize.add(70000);
-		pointSize.add(100000);
+//		pointSize.add(15000);
+//		pointSize.add(50000);
+//		pointSize.add(70000);
+//		pointSize.add(100000);
 		return pointSize;
 	}
 	
