@@ -50,25 +50,19 @@ public class Kmeans {
 		distanceTable = new Double[number_of_points][number_of_centroids];
 		Geometry.setDEBUG(false);
 		makecolors();
-		
-		//PointGenerator gen = new PointGenerator(x,y,numberOfDataPoints);
-		//setDataPoints(gen.GetPointsVector());
-		
 		int range[] = new int[2];
 		range[0] = x;
 		range[1] = y;
 		
 		Vector<DataPoint> randomGeneratedPoints = null;;
 		try {
-			randomGeneratedPoints = PointGenerator.generateAndReturnPoints(2, range, numberOfDataPoints, true, true);
+			randomGeneratedPoints = PointGenerator.generatePointsInShapeAndReturn("c:\\UnevenData2D.dat", 2);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			System.exit(0);
 		}
 		setDataPoints(randomGeneratedPoints);
-		
-		System.out.println("constructor " + dataPoints.size());
 		createCentroids();
 	}
 	
