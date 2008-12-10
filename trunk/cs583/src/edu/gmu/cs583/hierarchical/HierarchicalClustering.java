@@ -24,7 +24,7 @@ public class HierarchicalClustering {
 				LINK_TYPE.COMPLETE_LINK);
 		
 		Vector<DataPoint> points = PointGenerator.generateAndReturnPoints(3,
-				new int[] { 300, 300, 300}, 3, true, false);
+				new int[] { 300, 300, 300}, 210, true, false);
 		
 		System.out.println(new java.util.Date());
 		clustering.calculateClusters(points);
