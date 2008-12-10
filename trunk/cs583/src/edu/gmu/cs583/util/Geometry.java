@@ -106,5 +106,20 @@ public class Geometry {
 		return pointSize;
 	}
 	
+	public static Vector<Integer> makeRTreePointSize(){
+//		pointSize.add(15);
+//		pointSize.add(50);
+//		pointSize.add(100);
+		pointSize.add(500);
+//		pointSize.add(1000);
+//		pointSize.add(2000);
+//		pointSize.add(5000);
+//		pointSize.add(7500);
+//		pointSize.add(9000);
+//		pointSize.add(10000);
+//		pointSize.add(12000);
+//		pointSize.add(15000);
+		return pointSize;
+	}
 	
 }
