@@ -87,6 +87,7 @@ public class Kmeans {
 				}
 			}
 		}
+		System.out.println("END");
 	}
 	
 	public void runKmeans(Kmeans kmeans){
@@ -116,6 +117,42 @@ public class Kmeans {
 			            System.out.println("This file is not exist");
 		}catch (Exception e){
 			System.out.println("LOG STATS ERROR: writing to file failed");
+		}
+			    
+	}
+	
+		public void logGNUPlotFile(Integer Cent,Integer pts,Integer it){
+		BufferedWriter out = null;
+		try{
+			     File f=new File("c:\\plot\\data"+Cent+"p"+pts+"i"+it+".txt");
+			     File g=new File("c:\\plot\\data"+Cent+"p"+pts+"i"+it+"cent"+".txt");
+			     f.createNewFile();
+			     g.createNewFile();
+			      if(f.exists()){
+			      String str= "";
+			      	 for(DataPoint i : dataPoints){
+			      	//	 str += i.getX() +"\t"+i.getY() + " \t" + i.getMembershipId() + "\n";
+			      	 }
+			          out = new BufferedWriter(new FileWriter(f, true));
+			          out.write(str);
+			          out.close();
+			          //System.out.println("The data has been written");
+			          }
+		          else
+			            System.out.println("This file is not exist");
+			      if(g.exists()){
+				      String str= "";
+				      	 for(Centroid i : centroids){
+				      	//	 str += i.getX() +"\t"+i.getY() + "\t" + i.getCentroidId() + "\n";
+				      	 }
+				          out = new BufferedWriter(new FileWriter(g, true));
+				          out.write(str);
+				          out.close();
+				          }
+			          else
+			            System.out.println("This file is not exist");
+		}catch (Exception e){
+			System.out.println("GNUPLOT ERROR: writing to file failed");
 		}
 			    
 	}
