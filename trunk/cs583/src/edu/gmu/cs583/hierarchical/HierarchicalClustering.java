@@ -20,16 +20,12 @@ public class HierarchicalClustering {
 
 	public static void main(String[] args) throws Exception {
 
-		Integer x_range = new Integer(args[0]);
-		Integer y_range = new Integer(args[1]);
-		Integer numPoints = new Integer(args[2]);
-
 		HierarchicalClustering clustering = new HierarchicalClustering(
 				LINK_TYPE.COMPLETE_LINK);
-		PointGenerator generator = new PointGenerator(x_range, y_range,
-				3);
-		generator.GeneratePoints();
-		Vector<DataPoint> points = generator.GetPointsVector();
+		
+		Vector<DataPoint> points = PointGenerator.generateAndReturnPoints(2,
+				new int[] { 10, 10}, 3, true, false);
+		
 		System.out.println(new java.util.Date());
 		clustering.calculateClusters(points);
 		System.out.println(new java.util.Date());
@@ -150,24 +146,26 @@ public class HierarchicalClustering {
 
 		while (clusters.size() > 1) {
 
-			System.out.println("\nNumber of clusters: " + clusters.size());
+			System.out.println("\nNumber of clusters:\t" + clusters.size());
 			System.out.println("---------------------------------------------");
 			int i = 1;
 			for (Dendogram cluster : clusters) {
-				StringBuffer str = new StringBuffer("\tCentroid:\t");
+				StringBuffer str = new StringBuffer("Centroid:\t");
 				for (int dim = 0; dim <= cluster.getCentroid().getDimensions() - 1; dim++) {
 					str.append(cluster.getCentroid().getCoords()[dim] + " ");
 				}
 				System.out.println(str);
 
 				str = new StringBuffer();
-				str.append("\tContained Points:\t");
+				str.append("Contained Points:\n\t");
 				for (DataPoint point : cluster.getPoints()) {
 					for (int dim = 0; dim <= point.getDimensions() - 1; dim++) {
-						str.append(point.getCoords()[dim] + " ");
+						str.append(" " + point.getCoords()[dim]);
+						if(dim == point.getDimensions() - 1)
+							str.append(" " + i + "\n\t");
 					}
-					System.out.println(str + "\n");
 				}
+				System.out.println(str);
 				i++;
 			}
 			System.out
