@@ -56,7 +56,7 @@ public class Kmeans {
 		
 		Vector<DataPoint> randomGeneratedPoints = null;;
 		try {
-			randomGeneratedPoints = PointGenerator.generatePointsInShapeAndReturn("c:\\UnevenData2D.dat", 2);
+			randomGeneratedPoints = PointGenerator.readPointsFromFile("c:\\UnevenData2D.dat", 2);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
