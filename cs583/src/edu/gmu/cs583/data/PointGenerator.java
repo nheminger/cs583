@@ -136,7 +136,7 @@ public class PointGenerator {
 		return points;
 	}
 	
-	public static Vector<DataPoint> generatePointsInShapeAndReturn(String filename) throws Exception{
+	public static Vector<DataPoint> generatePointsInShapeAndReturn(String filename, int dimensions) throws Exception{
 		// temporary storage of points (to guarantee points are unique)
 		HashMap<String,DataPoint> pointsUniqueHash = new HashMap<String,DataPoint>();
 		
@@ -152,9 +152,9 @@ public class PointGenerator {
 			    		  double[] coords = null;
 				          while (( line = input.readLine()) != null) {
 								String[] parts = line.split("\\s");
-								coords = new double[parts.length];
-								for (int i = 0; i < parts.length; i++) {
-									 coords[i] = Integer.parseInt(parts[i]);
+								coords = new double[dimensions];
+								for (int i = 0; i < dimensions; i++) {
+									 coords[i] = Double.parseDouble(parts[i]);
 								}
 								point = new DataPoint(coords);
 								pointsUniqueHash.put(point.toString(), point);			
