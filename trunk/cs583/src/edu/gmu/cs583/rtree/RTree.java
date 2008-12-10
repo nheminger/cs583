@@ -1,9 +1,13 @@
 package edu.gmu.cs583.rtree;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
 import java.util.Vector;
 
 import edu.gmu.cs583.data.DataPoint;
 import edu.gmu.cs583.data.PointGenerator;
+import edu.gmu.cs583.kmeans_basic.Kmeans;
 import edu.gmu.cs583.util.Geometry;
 
 public class RTree {
@@ -16,7 +20,10 @@ public class RTree {
 	private String name;
 	private int M;
 	private int m;
-	protected boolean debug = true;
+	protected boolean debug = false;
+	int finalNumberOfCluster = 0;
+	
+	private static Vector<Integer> pointSize = Geometry.makeRTreePointSize();
 	
 	
 
@@ -71,31 +78,78 @@ public class RTree {
 	// adapted from http://gis.umb.no/gis/applets/rtree2/jdk1.1/noumbgisrtree.jar
 	@SuppressWarnings({"unchecked","unused"})
 	public static void main(String[] args) {
-		System.currentTimeMillis();
-		int numberOfPoints = 3000;
-		int clusters = 6;
-		int maxEntries = numberOfPoints / clusters;
-		
-		System.out.println("Using a max entries of " + maxEntries);
-
-		RTree rtree = new RTree(maxEntries);
-		System.out.println("Entering RTree");
 		
 		Vector<DataPoint> randomGeneratedPoints = null;
 		try {
-			int[] range = new int[2];
-			range[0] = 600;
-			range[1] = 600;
-			randomGeneratedPoints = PointGenerator.generateAndReturnPoints(2, range, numberOfPoints, true, true);
+			randomGeneratedPoints = PointGenerator.generatePointsInShapeAndReturn("c:/natural_clusters.dat", 2);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-			System.exit(0);
 		}
+		
+		System.out.println("SIZE: " + randomGeneratedPoints.size());
+		
+		int clusterNum = 4;
+		int maxEntries = randomGeneratedPoints.size() / clusterNum;
+		
+		RTree rtree = new RTree(maxEntries);
+		long starttime = System.currentTimeMillis();
 		for (int i = 0; i < randomGeneratedPoints.size(); i++) {
 			DataPoint dp = randomGeneratedPoints.get(i);
 			rtree.insert(new RTreeLeafEntry(null, new BoundingBox(dp.getCoords()[0], dp.getCoords()[1], dp.getCoords()[0], dp.getCoords()[1])));
 		}
+		long endtime = System.currentTimeMillis();
+		
+		// iterate over results
+		rtree.iterateTree(rtree.getRoot(), 1);
+		
+
+		RTree.logStats(rtree.finalNumberOfCluster, randomGeneratedPoints.size(), (endtime - starttime), null);
+		
+	
+		
+//		for(int clusterNum = 2; clusterNum < 10; clusterNum++){  // testing range of centroids 2 - 10
+//				System.out.println("testing " + clusterNum + " centroids....");
+//				
+//				for(Integer pointNum: pointSize){ // points size 10 - 100000 increasing by a factor of 10 each test
+//
+//					for(int k = 0; k < 20; k++ ){ // run test 20 times and get averages
+//						System.out.println("number of data points: " + pointNum);
+//						
+//						int maxEntries = pointNum / clusterNum;						
+//						System.out.println("Using a max entries of " + maxEntries);
+//						
+//						RTree rtree = new RTree(maxEntries);
+//						System.out.println("Entering RTree");
+//
+//						Vector<DataPoint> randomGeneratedPoints = null;
+//						try {
+//							int[] range = new int[2];
+//							range[0] = pointNum;
+//							range[1] = pointNum;
+//							randomGeneratedPoints = PointGenerator.generateAndReturnPoints(2, range, pointNum, true, true);
+//						} catch (Exception e) {
+//							// TODO Auto-generated catch block
+//							e.printStackTrace();
+//							System.exit(0);
+//						}
+//
+//						// run the r-tree insertions while recording time
+//						long starttime = System.currentTimeMillis();
+//						for (int i = 0; i < randomGeneratedPoints.size(); i++) {
+//							DataPoint dp = randomGeneratedPoints.get(i);
+//							rtree.insert(new RTreeLeafEntry(null, new BoundingBox(dp.getCoords()[0], dp.getCoords()[1], dp.getCoords()[0], dp.getCoords()[1])));
+//						}
+//						long endtime = System.currentTimeMillis();
+//						
+//						// iterate over results
+//						rtree.iterateTree(rtree.getRoot(), 1);
+//						
+//						RTree.logStats(rtree.finalNumberOfCluster, pointNum, (endtime - starttime), null);
+//					
+//					}
+//				}
+//		}
 
 //		PointGenerator gen = new PointGenerator(numberOfPoints);
 //		gen.GeneratePoints();
@@ -104,7 +158,6 @@ public class RTree {
 //			DataPoint dp = points.get(i);
 //			rtree.insert(new RTreeLeafEntry(null, new BoundingBox(dp.getX(), dp.getY(), dp.getX(), dp.getY())));
 //		}
-		
 		
 //		rtree.insert(new RTreeLeafEntry(null, new BoundingBox(10.0, 10.0, 20.0,20.0)));
 //		rtree.insert(new RTreeLeafEntry(null, new BoundingBox(15.0, 15.0, 25.0,25.0)));
@@ -116,21 +169,45 @@ public class RTree {
 //		rtree.insert(new RTreeLeafEntry(null, new BoundingBox(64.0, 20.0, 64.0,20.0)));
 //		rtree.insert(new RTreeLeafEntry(null, new BoundingBox(54.0, 3.0, 64.0,53.0)));
 //		rtree.insert(new RTreeLeafEntry(null, new BoundingBox(4.0, 4.0, 54.0,54.0)));
-		
-		
-		rtree.iterateTree(rtree.getRoot(), 1);
-		
+
 		//Vector endClusters = rtree.search(new BoundingBox(Double.MIN_VALUE, Double.MIN_VALUE, Double.MAX_VALUE, Double.MAX_VALUE));
 
 		
 		System.out.println("Leaving RTree");
 	}
 	
+	public static void logStats(Integer number_of_cents, Integer number_of_pts, long time,Integer iters){
+		   
+		try{
+			     File f=new File("c:\\rtree_stats.txt");
+			      if(f.exists()){
+			      String str= number_of_cents + ":" + number_of_pts+ ":" + time + ":" + iters + "\n";
+			          BufferedWriter out = new BufferedWriter(new FileWriter(f, true));
+			          out.write(str);
+			          out.close();
+			          //System.out.println("The data has been written");
+			          }
+			          else
+			            System.out.println("This file is not exist");
+		}catch (Exception e){
+			System.out.println("LOG STATS ERROR: writing to file failed");
+		}
+			    
+	}
+	
 	public void visitAllChildren(RTreeNode leaf, int branchId) {
+		
+		boolean hadChild = false;
 		for (int i = 0; i < leaf.entries.size(); i++) {
 			//System.out.println("Leaf entry [" + branchId + "]: " + leaf.getParent().entries.get(i));
 			BoundingBox bbox = ((RTreeEntry)leaf.entries.get(i)).getI();
 			System.out.println( bbox.getLeft() + "\t" + bbox.getLower() + "\t" + branchId);
+			hadChild = true;
+		}
+		
+		// save the largest cluster id as the total number of clusters
+		if (hadChild & (branchId > this.finalNumberOfCluster)) {
+			 this.finalNumberOfCluster = branchId;
 		}
 	}
 	

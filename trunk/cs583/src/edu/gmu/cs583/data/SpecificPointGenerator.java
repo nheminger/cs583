@@ -1,9 +1,13 @@
 package edu.gmu.cs583.data;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.Vector;
+
+import edu.gmu.cs583.util.Geometry;
 
 public class SpecificPointGenerator {
 	/**
@@ -23,30 +27,62 @@ public class SpecificPointGenerator {
 		 * 
 		 * output: Vector<DataPoint>
 		 */
-		for (int i = 0; i < 300; i=i+2) {
-			for (int j = 0; j < 300; j=j+2) {
-				System.out.println(i + "\t" + j);
-			}
+		for (int i = 300; i < 525; i=i+7) {
+				for (int j = 315; j < 400; j = j + 7) {
+					System.out.println(i + "\t" + j + "\t1");
+				}
 		}
+		
+		List clusterCenters = new ArrayList();
+		
 		for (int i = 0; i < 4; i++) {
 			int[] range = new int[2];
-			range[0] = 300;
-			range[1] = 300;
+			range[0] = 500;
+			range[1] = 500;
 			Vector<DataPoint> generateAndReturnPoints = null;
 			try {
-				generateAndReturnPoints = PointGenerator.generateAndReturnPoints(2, range, 1, true, false);
+					boolean outsideRange = false;
+					while(!outsideRange) {
+						generateAndReturnPoints = PointGenerator.generateAndReturnPoints(2, range, 1, true, false);
+						for (int j = 0; j < clusterCenters.size(); j++) {
+							if (Geometry.getDistance(generateAndReturnPoints.get(0), (DataPoint)clusterCenters.get(j)) < 150) {
+								outsideRange = false;
+								break;
+							} else if (j == (clusterCenters.size() - 1)) {
+								clusterCenters.add(generateAndReturnPoints.get(0));
+								outsideRange = true;
+								break;
+							}
+						}
+						
+						if (clusterCenters.size() == 0) {
+							clusterCenters.add(generateAndReturnPoints.get(0));
+							outsideRange = true;
+						}
+					}
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+			
+			Circle circle = new Circle(generateAndReturnPoints.get(0), 50);
+			
 			Map<String, DataPoint> pointHash = new HashMap<String, DataPoint>();
 			do {
-				//generateAndReturnPoints = PointGenerator.generateAndReturnPoints(2, range, 1, true, false);
-				
-			} while (pointHash.size() < 75);
+				Vector<DataPoint> randomPoints = null;
+				try {
+					randomPoints = PointGenerator.generateAndReturnPoints(2, range, 1, true, false);
+					if (circle.contains(randomPoints.get(0))) {
+						pointHash.put(randomPoints.get(0).toString(), randomPoints.get(0));
+					}	
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			} while (pointHash.size() < 200);
 			
-			for (Iterator iterator = pointHash.entrySet().iterator(); iterator.hasNext();) {
-				DataPoint dataPoint = (DataPoint) iterator.next();
+			for(String key : pointHash.keySet()){
+				System.out.println(pointHash.get(key).toString());
 			}
 		}
 	}
