@@ -81,7 +81,7 @@ public class RTree {
 		
 		Vector<DataPoint> randomGeneratedPoints = null;
 		try {
-			randomGeneratedPoints = PointGenerator.generatePointsInShapeAndReturn("c:/natural_clusters.dat", 2);
+			randomGeneratedPoints = PointGenerator.readPointsFromFile("c:/natural_clusters.dat", 2);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
