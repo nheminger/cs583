@@ -54,7 +54,7 @@ public class Dendogram {
 	 * 
 	 * @return the centroid representing the center of the dendogram.
 	 */
-	public DataPoint recalculateCentroid() {
+	public DataPoint recalculateAverageCentroid() {
 
 		if (subDendograms.size() > 1) {
 			centroid = new DataPoint(new double[dimensions]);
@@ -180,8 +180,6 @@ public class Dendogram {
 	public boolean equals(Object anotherObj) {
 		boolean equal = true;
 		Dendogram anotherDendogram = (Dendogram) anotherObj;
-		anotherDendogram.recalculateCentroid();
-		this.recalculateCentroid();
 
 		for (int dim = 0; dim <= this.getCentroid().getDimensions() - 1; dim++) {
 			double thisVal = this.getCentroid().getCoords()[dim];
