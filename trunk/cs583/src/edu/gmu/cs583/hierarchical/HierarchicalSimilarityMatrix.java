@@ -56,12 +56,9 @@ public class HierarchicalSimilarityMatrix {
 	}
 
 	/**
-	 * Calculates the similarity of data points using Euclidean distance.
-	 * 
-	 * @param type
-	 *            Type Hierarchical LINK type.
+	 * Calculates the similarity of data points using Euclidean distance. Average Link Type 
 	 */
-	public void calculateSimilarity() {
+	public void calculateAverageLinkSimilarity() {
 		for (int i = 0; i <= clusters.size() - 1; i++) {
 			for (int j = 0; j <= clusters.size() - 1; j++) {
 				if (i != j) {
@@ -78,7 +75,7 @@ public class HierarchicalSimilarityMatrix {
 			}
 		}
 	}
-
+	
 //	@SuppressWarnings("unchecked")
 //	public void updateSimilarities(Dendogram oldCluster_x,
 //			Dendogram oldCluster_y, Dendogram updated) {
