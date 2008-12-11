@@ -1,6 +1,10 @@
 package edu.gmu.cs583.rtree;
 import java.util.Arrays;
 
+/**
+ * Adapted from http://gis.umb.no/gis/applets/rtree2/jdk1.1/
+ */
+
 
 public class Rectangle {
 

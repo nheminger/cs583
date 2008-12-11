@@ -1,5 +1,9 @@
 package edu.gmu.cs583.rtree;
 
+/**
+ * Adapted from http://gis.umb.no/gis/applets/rtree2/jdk1.1/
+ */
+
 public class RTreeInternalNode extends RTreeNode
 {
     public RTreeInternalNode(RTree tree) {

@@ -1,5 +1,9 @@
 package edu.gmu.cs583.rtree;
 
+/**
+ * Adapted from http://gis.umb.no/gis/applets/rtree2/jdk1.1/
+ */
+
 import java.awt.Button;
 import java.awt.Color;
 import java.util.Vector;
