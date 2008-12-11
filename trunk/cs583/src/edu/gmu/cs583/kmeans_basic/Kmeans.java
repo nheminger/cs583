@@ -56,7 +56,7 @@ public class Kmeans {
 		
 		Vector<DataPoint> randomGeneratedPoints = null;;
 		try {
-			randomGeneratedPoints = PointGenerator.readPointsFromFile("c:\\UnevenData2D.dat", 2);
+			randomGeneratedPoints = PointGenerator.readPointsFromFile("c:\\natural_clusters.dat", 2);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -66,20 +66,38 @@ public class Kmeans {
 		createCentroids();
 	}
 	
+	Kmeans(String filename,Integer x){
+		//distanceTable = new Double[number_of_points][number_of_centroids];
+		
+		Geometry.setDEBUG(false);
+		makecolors();
+		Vector<DataPoint> randomGeneratedPoints = null;;
+		try {
+			randomGeneratedPoints = PointGenerator.readPointsFromFile("c:\\UnevenData2D.dat", 2);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			System.exit(0);
+		}
+		number_of_centroids = x;
+		number_of_points = randomGeneratedPoints.size();
+		setDataPoints(randomGeneratedPoints);
+		createCentroids();
+	}
+	
 	public static void main(String[] args) {
 		Kmeans kmeans = null;
 //		Integer h = 15000;
 //		Calendar cal = Calendar.getInstance();
 //		cal.getTime();
-		for(int i = 2; i < 10; i++){  // testing range of centroids 2 - 10 
+		for(int i = 6; i < 9; i++){  // testing range of centroids 2 - 10 
 			System.out.println("testing " + i + " centroids....");
-			for(Integer h: pointSize){ // points size 10 - 100000 increasing by a factor of 10 each test
-				for(int k = 0; k < 20; k++ ){ // run test 100 times
-					System.out.println("number of data points: " + h);
-					kmeans = new Kmeans(i ,h ,h, h);
+			//for(Integer h: pointSize){ // points size 10 - 100000 increasing by a factor of 10 each test
+				for(int k = 0; k < 1; k++ ){ // run test 100 times
+					kmeans = new Kmeans("hi",i);
 					kmeans.runKmeans(kmeans);
 				}
-			}
+			//}
 		}
 		System.out.println("END");
 	}
@@ -91,9 +109,11 @@ public class Kmeans {
 			iterations++;
 			kmeans.calulateMembership();
 			kmeans.recomputeCentroids();
+			System.out.println(kmeans);
+			logGNUPlotFile(kmeans.getCentroids().size(), kmeans.getDataPoints().size(),iterations);
 		}while(!kmeans.isDone());
 		long endtime = System.currentTimeMillis();
-		logStats(kmeans.getCentroids().size(), kmeans.getDataPoints().size(), (endtime - starttime), iterations); 
+		//logStats(kmeans.getCentroids().size(), kmeans.getDataPoints().size(), (endtime - starttime), iterations); 
 	}
 	
 	public void logStats(Integer number_of_cents, Integer number_of_pts, long time,Integer iters){
@@ -118,14 +138,14 @@ public class Kmeans {
 		public void logGNUPlotFile(Integer Cent,Integer pts,Integer it){
 		BufferedWriter out = null;
 		try{
-			     File f=new File("c:\\plot\\data"+Cent+"p"+pts+"i"+it+".txt");
-			     File g=new File("c:\\plot\\data"+Cent+"p"+pts+"i"+it+"cent"+".txt");
+			     File f=new File("c:\\plot\\"+Cent+"i"+it+".dat");
+			     File g=new File("c:\\plot\\"+Cent+"i"+it+"cent"+".dat");
 			     f.createNewFile();
 			     g.createNewFile();
 			      if(f.exists()){
 			      String str= "";
 			      	 for(DataPoint i : dataPoints){
-			      	//	 str += i.getX() +"\t"+i.getY() + " \t" + i.getMembershipId() + "\n";
+			      		 str += i.getCoords()[0] +"\t"+i.getCoords()[1] + " \t" + i.getMembershipId() + "\n";
 			      	 }
 			          out = new BufferedWriter(new FileWriter(f, true));
 			          out.write(str);
@@ -137,7 +157,7 @@ public class Kmeans {
 			      if(g.exists()){
 				      String str= "";
 				      	 for(Centroid i : centroids){
-				      	//	 str += i.getX() +"\t"+i.getY() + "\t" + i.getCentroidId() + "\n";
+				      		 str += i.getCoords()[0] +"\t"+i.getCoords()[1] + "\t" + i.getCentroidId() + "\n";
 				      	 }
 				          out = new BufferedWriter(new FileWriter(g, true));
 				          out.write(str);
@@ -161,7 +181,7 @@ public class Kmeans {
 	}
 	
 	public void initCentroids(){
-		int t = 0;
+		int t = 10;
 		System.out.println(" init " + centroids.size() +"  " + dataPoints.size());
 		for(Centroid i: centroids){
 			//System.out.println(dataPoints.get(t).getX()+ " ===== " +dataPoints.get(t).getY() + " t: " + t + " -> " + dataPoints.size() );
@@ -169,7 +189,7 @@ public class Kmeans {
 			// 2-D to N-D conversion
 			//i.setPoints(dataPoints.get(t).getX(),dataPoints.get(t).getY());
 			i.setCoords(dataPoints.get(t).getCoords());
-			i.setCentroidColor(colors.get(t));
+			i.setCentroidColor(colors.get(t-10));
 			t++;
 		}
 	}
@@ -212,6 +232,7 @@ public class Kmeans {
 			System.out.println("recompute centroids");
 			for(Centroid j: centroids){
 				
+				System.out.println("recomputerCentroid: " + j.getCentroidId());
 				Double x_mean = 0.0, y_mean = 0.0;
 				
 				
@@ -281,14 +302,14 @@ public class Kmeans {
 	}
 
 	public String toString(){
-//		Integer k = 0;
+		Integer k = 0;
 		String str = new String();
-//		str = "----- Data Points -----\nptId\tpos\t\tcentId\n";
-//		for(DataPoint i : dataPoints){
-//			//str = str + k + "\t" + i + "\n";
-//			str = str + i + "\n";
-//			k++;
-//		}
+		str = "----- Data Points -----\nptId\tpos\t\tcentId\n";
+		for(DataPoint i : dataPoints){
+			//str = str + k + "\t" + i + "\n";
+			str = str + i + "\n";
+			k++;
+		}
 
 		str = str + "\n\n" + "----- Centroidr Points -----\ncentId\tpos\t\t\tdistMoved\tnumberOfPts\n";;
 		for(Centroid j: centroids){
