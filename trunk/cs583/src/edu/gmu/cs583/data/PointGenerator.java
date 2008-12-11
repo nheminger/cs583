@@ -154,7 +154,7 @@ public class PointGenerator {
 								String[] parts = line.split("[\\s]+");
 								coords = new double[dimensions];
 								for (int i = 0; i < dimensions; i++) {
-									 System.out.println("part: " + parts[i]);
+									 //System.out.println("part: " + parts[i]);
 									 coords[i] = Double.parseDouble(parts[i]);
 								}
 								point = new DataPoint(coords);
