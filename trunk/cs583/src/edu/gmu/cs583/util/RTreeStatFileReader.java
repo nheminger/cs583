@@ -23,7 +23,7 @@ public class RTreeStatFileReader {
 	
 	public void fileReader(){
 		try{
-		    FileInputStream fstream = new FileInputStream("c:\\stats.txt");
+		    FileInputStream fstream = new FileInputStream("c:\\rtree_stats.txt");
 		    DataInputStream in = new DataInputStream(fstream);
 		        BufferedReader br = new BufferedReader(new InputStreamReader(in));
 		    String INPUT;
@@ -34,7 +34,6 @@ public class RTreeStatFileReader {
 		    		Integer centvalue = Integer.parseInt(m.group(1));
 		    		Integer ptvalue = Integer.parseInt(m.group(2));
 		    		Integer timevalue = Integer.parseInt(m.group(3));
-		    		Integer itervalue = Integer.parseInt(m.group(4));
 		    		if(data.isEmpty()){
 		    			Stats stats = new Stats();
 		    			stats.numberPoints = ptvalue;
@@ -44,7 +43,7 @@ public class RTreeStatFileReader {
 		    		else {
 		    			boolean found = false;
 		    			for(Stats i : data){
-		    				if(i.numberPoints == ptvalue){
+		    				if(i.numberPoints.intValue() == ptvalue.intValue()){
 		    					i.add(timevalue);
 		    					found = true;
 		    				}
