@@ -20,15 +20,23 @@ public class HierarchicalClustering {
 
 	public static void main(String[] args) throws Exception {
 
+		int dimensions = new Integer(args[0]);
+		int[] range = new int[dimensions];
+		for(int i = 0; i <= dimensions - 1; i++) {
+			range[i] = 300;
+		}
+		Integer numPoints = new Integer(args[1]);
+		
+		
 		HierarchicalClustering clustering = new HierarchicalClustering(
 				LINK_TYPE.AVERAGE_LINK);
 		
-		Vector<DataPoint> points = PointGenerator.generateAndReturnPoints(3,
-				new int[] { 300, 300, 300}, 210, true, false);
+		Vector<DataPoint> points = PointGenerator.generateAndReturnPoints(dimensions, range, numPoints, true, false);
 		
-		System.out.println(new java.util.Date());
+		long startTime = System.currentTimeMillis();
 		clustering.calculateClusters(points);
-		System.out.println(new java.util.Date());
+		long endTime = System.currentTimeMillis();
+		System.out.println("\nMilliseconds Elapsed: " + (endTime - startTime));
 	}
 
 	private HierarchicalSimilarityMatrix similarityMatrix;
