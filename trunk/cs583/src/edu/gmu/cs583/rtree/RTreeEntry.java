@@ -1,5 +1,9 @@
 package edu.gmu.cs583.rtree;
 
+/**
+ * Adapted from http://gis.umb.no/gis/applets/rtree2/jdk1.1/
+ */
+
 public abstract class RTreeEntry {
 	private Object pointer;
 	private BoundingBox I;

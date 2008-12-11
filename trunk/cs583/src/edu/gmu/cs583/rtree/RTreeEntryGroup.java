@@ -1,5 +1,8 @@
 package edu.gmu.cs583.rtree;
 
+/**
+ * Adapted from http://gis.umb.no/gis/applets/rtree2/jdk1.1/
+ */
 
 import java.util.Vector;
 
